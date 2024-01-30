@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_utils.c                                         :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/01/30 11:50:30 by kgriset          ###   ########.fr       */
+/*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
+/*   Updated: 2024/01/30 11:51:56 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "push_swap.h"
 
-int *parse_input(int argc, char ** argv)
-{
-         
+#ifndef PUSH_SWAP
+# define PUSH_SWAP
 
-}
+#include "libft/libft.h"
 
+
+#endif
