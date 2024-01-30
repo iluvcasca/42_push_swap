@@ -6,14 +6,16 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/01/30 11:50:30 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:42:15 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
 int *parse_input(int argc, char ** argv)
 {
-         
+    int * numbers_lst;
 
+    if (argc > 2)
+    {
+    }
 }
-

@@ -6,14 +6,14 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/01/30 11:51:56 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:57:56 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP
 # define PUSH_SWAP
 
-#include "libft/libft.h"
+#include "libft/mylibc.h"
 
 
 #endif
