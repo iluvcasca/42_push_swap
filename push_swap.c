@@ -6,27 +6,22 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:58:30 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/02 16:53:44 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/02 18:52:59 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int main()
+int main(int argc, char ** argv)
 {
-    int argc = 2;
-    char * argv[2];
-    argv[0] = "a.out";
-    argv[1] = "2 1 3 6 5 8";
     t_circular_double_link_list cdl_list;
+    int status;
 
     cdl_init_list(&cdl_list);
-    int status = parse_input(argc, argv, &cdl_list); 
-    if (!status)
-        ft_printf("error\n");
+    if (argc > 1)
+        status = parse_input(argc, argv, &cdl_list); 
     else
-    {
-        ft_printf("success\n");
+        return (ERROR);
+    if (status)
         cdl_free_list(&cdl_list);
-    }
-    return (1);
+    return (SUCCESS);
 }
