@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/02 18:52:12 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/03 16:35:44 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/mylibc/mylibc_local.h"
@@ -80,6 +80,7 @@ int parse_arguments(int argc, char ** argv, t_circular_double_link_list * cdl_li
     }
     return (SUCCESS);
 }
+
 int add_int2node(t_circular_double_link_list * cdl_list, t_double_link_node * cdl_node, int value)
 {
     cdl_node = malloc(sizeof(*cdl_node)); 
