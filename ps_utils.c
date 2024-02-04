@@ -6,10 +6,9 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/03 16:35:44 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/04 17:40:33 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/mylibc/mylibc_local.h"
 #include "push_swap.h"
 
 int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
@@ -30,6 +29,7 @@ int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
         if (status == ERROR)
             ft_printf("Error\n");
     }
+    //
     if (status)
     {
         cdl_node = cdl_list->first_node;
@@ -52,8 +52,8 @@ int parse_string(char * string, t_circular_double_link_list * cdl_list, int * st
 
     i = 0;
     inputs = ft_split(string, ' ');
-    if (!inputs)
-        return (ERROR);
+    if (!inputs || inputs[i] == NULL)
+        return (free(inputs), ERROR);
     while(inputs[i])
     {
         value = ft_atoi_safe(inputs[i], status);
@@ -61,6 +61,8 @@ int parse_string(char * string, t_circular_double_link_list * cdl_list, int * st
             return (free_split(inputs), cdl_free_list(cdl_list), ERROR);
         i++;
     }
+    if (check_duplicate(cdl_list) == ERROR)
+        return (free_split(inputs), cdl_free_list(cdl_list), ERROR);
     return (free_split(inputs), SUCCESS);
 }
 
@@ -78,6 +80,8 @@ int parse_arguments(int argc, char ** argv, t_circular_double_link_list * cdl_li
             return (cdl_free_list(cdl_list), ERROR);
         i++;
     }
+    if (check_duplicate(cdl_list) == ERROR)
+        return (cdl_free_list(cdl_list), ERROR);
     return (SUCCESS);
 }
 
@@ -96,4 +100,24 @@ int add_int2node(t_circular_double_link_list * cdl_list, t_double_link_node * cd
         return (ERROR);
 
     return (SUCCESS);
+}
+
+int * cdl2array(t_circular_double_link_list * cdl_list)
+{
+    t_double_link_node * cdl_node;
+    size_t i;
+    int * array;
+
+    i = 0;
+    array = malloc(sizeof(*array) * cdl_list->total);
+    cdl_node = cdl_list->first_node;
+    if (array)
+    {
+        do {
+            array[i] = *((int *)cdl_node->data);
+            cdl_node = cdl_node->next;
+            ++i;
+        } while (cdl_node != cdl_list->first_node);
+    }
+    return (array);
 }
