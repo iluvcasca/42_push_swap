@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_utils.c                                         :+:      :+:    :+:   */
+/*   ps_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/04 17:40:33 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/05 19:07:29 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -14,32 +14,20 @@
 int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
 {
     int status;
-    t_double_link_node * cdl_node;
 
     status = ERROR;
     if (argc == 2)
     {
         status = parse_string(argv[1], cdl_list, &status);
         if (status == ERROR)
-            ft_printf("Error\n");
+            return(ft_printf("Error\n"), ERROR);
     }
     else if (argc > 2)
     {
         status = parse_arguments(argc, argv, cdl_list, &status);
         if (status == ERROR)
-            ft_printf("Error\n");
+            return(ft_printf("Error\n"), ERROR);
     }
-    //
-    if (status)
-    {
-        cdl_node = cdl_list->first_node;
-        do {
-            ft_printf("%d\n", *((int *)cdl_node->data));
-            cdl_node = cdl_node->next;
-        } while (cdl_node != cdl_list->first_node);
-    }
-    else
-        return (ERROR);
     return (SUCCESS);
 }
 
@@ -98,7 +86,6 @@ int add_int2node(t_circular_double_link_list * cdl_list, t_double_link_node * cd
     }
     else
         return (ERROR);
-
     return (SUCCESS);
 }
 
@@ -111,7 +98,7 @@ int * cdl2array(t_circular_double_link_list * cdl_list)
     i = 0;
     array = malloc(sizeof(*array) * cdl_list->total);
     cdl_node = cdl_list->first_node;
-    if (array)
+    if (array && cdl_list->first_node)
     {
         do {
             array[i] = *((int *)cdl_node->data);
