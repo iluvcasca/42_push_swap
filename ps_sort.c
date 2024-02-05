@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 16:35:51 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/04 17:13:15 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:40:07 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -34,7 +34,8 @@ int * bottom_up_merge_sort(int * array, size_t n)
         update_merge(&width, &array, &array_cpy);
     }
     if (n % 2 == 0)
-        return (ft_memcpy(array_cpy, array, n * sizeof(int)), free(array), array_cpy);
+        return (ft_memcpy(array_cpy, array, n * sizeof(int))
+            , free(array), array_cpy);
     else
         return (free(array_cpy), array);
 }
