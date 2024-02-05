@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/04 17:24:34 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/05 19:17:14 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct s_i {
     size_t end;
 } t_i;
 
+//temp 
+void print_array(int * array, size_t size);
+void print_cdl(t_circular_double_link_list * cdl_list);
 // parsing
 int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list);
 int parse_string(char * string, t_circular_double_link_list * cdl_list, int * status);
@@ -29,9 +32,25 @@ int add_int2node(t_circular_double_link_list * cdl_list, t_double_link_node * cd
 int * cdl2array(t_circular_double_link_list * cdl_list);
 int check_duplicate(t_circular_double_link_list * cdl_list);
 
+// operations
+int swap(t_circular_double_link_list * cdl_list, char list_name);
+void ss(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b);
+int push(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, char list_name);
+int rotate(t_circular_double_link_list * cdl_list, char list_name);
+void rr(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b);
+int r_rotate(t_circular_double_link_list * cdl_list, char list_name);
+void r_rr(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b);
+
+void push_n(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, char list_name, size_t n);
+void r_rotate_n(t_circular_double_link_list * cdl_list, char list_name, size_t n);
+void rotate_n(t_circular_double_link_list * cdl_list, char list_name, size_t n);
+
 // sorting
 size_t min_size_t(size_t a, size_t b);
 int * bottom_up_merge_sort(int * array, size_t n);
 void bottom_up_merge(int * A, t_i _i, int * B);
 void update_merge(size_t * width, int ** array, int ** array_cpy);
+
+// algo
+int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a,t_circular_double_link_list * cdll_b);
 #endif
