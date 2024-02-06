@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:58:30 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/06 17:20:51 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/06 19:36:24 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -19,7 +19,8 @@ int main(int argc, char ** argv)
     int status;
     
     argc = 2;
-    argv[1] = "129 67 55 576 308 71 72 215 643 682 363 18 326 30 377";
+    // argv[1] = "31 129 67 55 576 308 71 72 215 643 682 363 18 326 30 377";
+    argv[1] = "475 562 22 397 285 135 215 56 603 432 100 293";
     char * s = "----------------------------\n";
     //
     cdl_init_list(&cdl_list_a);
@@ -32,7 +33,7 @@ int main(int argc, char ** argv)
     if (status)
     {
         int * array = cdl2array(&cdl_list_a);
-        array = bottom_up_merge_sort(array, cdl_list_a.total);
+        // array = bottom_up_merge_sort(array, cdl_list_a.total);
         ft_printf("%sInput\n%s", s, s);
         print_cdl(&cdl_list_a);
         // ft_printf("%sParse Sort\n%s", s, s);

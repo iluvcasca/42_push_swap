@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/06 12:24:27 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/06 20:31:55 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ typedef struct s_i {
     size_t right;
     size_t end;
 } t_i;
+
+typedef struct s_cdl_i {
+    size_t bottom;
+    size_t left;
+    size_t right;
+    size_t end;
+    size_t * run_left;
+    size_t * run_right;
+
+} t_cdl_i;
 
 //temp 
 void print_array(int * array, size_t size);
