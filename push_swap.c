@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:58:30 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/05 19:58:51 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/06 17:20:51 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -39,6 +39,7 @@ int main(int argc, char ** argv)
         // print_array(array, cdl_list_a.total);
         ft_printf("%sOPS\n%s", s, s);
 
+        // deal(&cdl_list_a, &cdl_list_b);
         cdl_bottom_up_merge_sort(&cdl_list_a, &cdl_list_b);
         // rotate(&cdl_list_a, 'a');
         // push(&cdl_list_b, &cdl_list_a, 'b');
