@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:58:30 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/08 15:41:16 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/08 18:59:27 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -21,6 +21,7 @@ int main(int argc, char ** argv)
     // argc = 2;
     // argv[1] = "31 129 67 55 576 308 71 72 215 643 682 363 18 326 30 377";
     // argv[1] = "12 475 562 22 397 285 135 215 56 603 432 100 293";
+    // argv[1] = "132 627 533 574 438 174 582 591 310 4 367 89 494 275 15 445 434 142 362 640 408";
     char * s = "----------------------------\n";
     //
     cdl_init_list(&cdl_list_a);
@@ -43,9 +44,23 @@ int main(int argc, char ** argv)
         ft_printf("%sOPS\n%s", s, s);
 
         deal(&cdl_list_a, &cdl_list_b);
-        set_run(&cdl_list_a, run_a, &cdl_list_b, run_b);
+        set_run(&cdl_list_a, run_a);
+        set_run(&cdl_list_b, run_b);
         print_cdl(&cdl_list_a);
         print_cdl(&cdl_list_b);
+         
+        print_map(run_a);
+        ft_printf("%u\n", run_a->run_nb);
+        print_map(run_b);
+        ft_printf("%u\n", run_b->run_nb);
+
+        free(run_a->map);
+        free(run_b->map);
+        deal2(&cdl_list_a,run_a, 'a');
+        deal2(&cdl_list_b, run_b, 'b');
+        print_cdl(&cdl_list_a);
+        print_cdl(&cdl_list_b);
+         
         print_map(run_a);
         ft_printf("%u\n", run_a->run_nb);
         print_map(run_b);

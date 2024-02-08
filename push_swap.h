@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/08 15:38:50 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/08 18:43:43 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void update_merge(size_t * width, int ** array, int ** array_cpy);
 // algo
 int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a,t_circular_double_link_list * cdll_b);
 void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b);
-int set_run(t_circular_double_link_list * cdll_a, t_run * run_a, t_circular_double_link_list * cdll_b, t_run * run_b);
+int set_run(t_circular_double_link_list * cdll_a, t_run * run_a);
 void print_map(t_run * run);
+void deal2(t_circular_double_link_list * cdll, t_run * run, char list_name);
 #endif
