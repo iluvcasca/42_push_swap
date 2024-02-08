@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/06 20:36:28 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:41:48 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -50,88 +50,77 @@ void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cd
     free(array);
 }
 
-void cdl_bottom_up_merge(int * array,t_circular_double_link_list *cdll_a, t_cdl_i i, int * array_cpy, t_circular_double_link_list *cdll_b)
+int set_run(t_circular_double_link_list * cdll_a, t_run * run_a, t_circular_double_link_list * cdll_b, t_run * run_b)
 {
+    int * array_a;
+    int * array_b;
+    size_t i;
     size_t j;
-    size_t k;
-    size_t l;
-    char direction;
 
-    k = i.bottom;
-    j = i.bottom;
-    l = i.bottom;
-    direction = 'r';
+    i = 0;
+    j = 0;
+    run_a->map = malloc(sizeof(int)*cdll_a->total);
+    run_a->map_size = cdll_a->total;
+    run_a->run_nb = 0;
+    run_b->map = malloc(sizeof(int)*cdll_b->total);
+    run_b->map_size = cdll_b->total;
+    run_b->run_nb = 0;
 
-    if (cdll_a->total == cdll_b->total)
-        direction = 'l';
-    while (k < i.end)
+    array_a = cdl2array(cdll_a); 
+    array_b = cdl2array(cdll_b); 
+    if (!run_a->map || !run_b->map || !array_a || !array_b)
+        return (free(run_a->map), free(run_b->map), free(array_a), free(array_b), ERROR);
+    array_in_place_reverse(array_a, cdll_a->total);
+    array_in_place_reverse(array_b, cdll_b->total);
+
+    while (i < run_a->map_size)
     {
-        if (l < i.left && (j >= i.right || array[l] >= array_cpy[j]))
+        j = i;
+        while (j + 1 < run_a->map_size && array_a[j] >= array_a[j+1])
         {
-            r_rotate(cdll_a, 'a');
-            if (direction == 'r')
-                push(cdll_b, cdll_a, 'b');
-            ++l;
+            run_a->map[j] = '0';
+            j++;
+        }
+        if (j == i)
+        {
+            run_a->map[i] = 'x';
+            run_a->run_nb++;
         }
         else
         {
-            r_rotate(cdll_b, 'b');
-            if (direction == 'l')
-                push(cdll_a, cdll_b, 'b');
-            ++j;
+            run_a->map[i] = 's';
+            run_a->map[j] = 'e';
+            run_a->run_nb++;
         }
-        ++k;
-        print_cdl(cdll_a);
-        print_cdl(cdll_b);
+        i+=(j-i);
+        i++;
     }
-    if (direction == 'r')
-        --(*(i.run_left));
-    else
-        --(*(i.run_right));
-}
 
-int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a,t_circular_double_link_list * cdll_b)
-{
-    int * array_cpy;
-    int * array;
-    size_t width;
-    size_t n = cdll_a->total;
-    size_t run_right;
-    size_t run_left;
-    t_cdl_i i;
-
-    i.run_right = &run_right;
-    i.run_left = &run_left;
-    deal(cdll_a, cdll_b);
-    print_cdl(cdll_a);
-    print_cdl(cdll_b);
-
-    width = 2;
-    run_left = n / 4;
-    run_right = n / 4;
-    while (width < n && cdll_a->total && cdll_b->total)
+    i = 0;
+    j = 0;
+    while (i < run_b->map_size)
     {
-        array = cdl2array(cdll_a);
-        array_cpy = cdl2array(cdll_b);
-        size_t max_a = cdll_a->total;
-        size_t max_b = cdll_b->total;
-        array_in_place_reverse(array, cdll_a->total);
-        array_in_place_reverse(array_cpy, cdll_b->total);
-
-        i.bottom = 0;
-        while (i.bottom < n / 2)
+        j = i;
+        while (j + 1 < run_b->map_size && array_b[j] >= array_b[j+1])
         {
-            i.right = min_size_t(i.bottom + width, max_a); 
-            i.left = min_size_t(i.bottom + width, max_b); 
-            i.end = min_size_t(i.bottom + 2*width, n/2);
-            cdl_bottom_up_merge(array,cdll_a, i, array_cpy,cdll_b);
-            i.bottom += width;
+            run_b->map[j] = '0';
+            j++;
         }
-        width *= 2;
-        free(array);
-        free(array_cpy);
+        if (j == i)
+        {
+            run_b->map[i] = 'x';
+            run_b->run_nb++;
+        }
+        else
+        {
+            run_b->map[i] = 's';
+            run_b->map[j] = 'e';
+            run_b->run_nb++;
+        }
+        i+=(j-i);
+        i++;
     }
-    return (SUCCESS);
-}
 
+    return (free(array_a), free(array_b), SUCCESS);
+}
 

@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/06 20:31:55 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:38:50 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ typedef struct s_cdl_i {
     size_t * run_right;
 
 } t_cdl_i;
+
+typedef struct s_run {
+    int * map;
+    size_t map_size;
+    size_t run_nb;
+} t_run;
 
 //temp 
 void print_array(int * array, size_t size);
@@ -64,4 +70,6 @@ void update_merge(size_t * width, int ** array, int ** array_cpy);
 // algo
 int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a,t_circular_double_link_list * cdll_b);
 void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b);
+int set_run(t_circular_double_link_list * cdll_a, t_run * run_a, t_circular_double_link_list * cdll_b, t_run * run_b);
+void print_map(t_run * run);
 #endif
