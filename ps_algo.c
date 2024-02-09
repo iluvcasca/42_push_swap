@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/08 18:51:23 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:44:07 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -139,11 +139,13 @@ void deal2(t_circular_double_link_list * cdll, t_run * run, char list_name)
             break;
         }
         free(array);
-        if (i < run->map_size)
-            free(run->map);
+        free(run->map);
     }
     if (i != run->map_size)
+    {
         free(array);
+        free(run->map);
+    }
 }
 
 int set_run(t_circular_double_link_list * cdll_a, t_run * run_a)
@@ -188,3 +190,96 @@ int set_run(t_circular_double_link_list * cdll_a, t_run * run_a)
     return (free(array_a), SUCCESS);
 }
 
+void cdl_bottom_up_merge(t_circular_double_link_list * cdll_a, int * array_a, t_run * run_a, t_circular_double_link_list * cdll_b, int * array_b, t_run * run_b, t_i * i)
+{
+    size_t j;
+    size_t k;
+    size_t l;
+    char direction;
+
+    j = i->left;
+    l = i->right;
+    direction = 'r';
+    if (run_a->run_nb <= run_b->run_nb)
+    {
+        direction = 'l';
+        run_a->run_nb++;
+        run_b->run_nb--;
+    }
+    else
+    {
+        run_a->run_nb--;
+        run_b->run_nb++;
+    }
+    while (run_a->map[i->left] != 'e' && run_a->map[i->left] != 'x')
+       i->left++; 
+    while (run_b->map[i->right] != 'e' && run_b->map[i->right] != 'x')
+       i->right++; 
+    while (j <= i->left || l <= i->right)
+    {
+        if (j <= i->left && (l > i->right || array_a[j] > array_b[l]))
+        {
+            if (direction == 'l')
+                r_rotate(cdll_a, 'a');
+            else
+            {
+                r_rotate(cdll_a, 'a');
+                push(cdll_b, cdll_a, 'b');
+            }
+            ++j;
+        }
+        else
+        {
+            if (direction == 'r')
+                r_rotate(cdll_b, 'b');
+            else
+            {
+                r_rotate(cdll_b, 'b');
+                push(cdll_a, cdll_b, 'a');
+            }
+            ++l;
+        }
+    }
+    i->left = j;
+    i->right = l;
+}
+int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a, t_circular_double_link_list * cdll_b, t_run * run_b)
+{
+    int * array_a;
+    int * array_b;
+    t_i * i;
+
+    do
+    {
+        array_a = cdl2array(cdll_a); 
+        array_b = cdl2array(cdll_b); 
+        set_run(cdll_a, run_a);
+        set_run(cdll_b, run_b);
+        if (!run_a->map ||!array_a || !run_b->map ||!array_b)
+            return (free(array_a),free(array_b), free(run_a->map), free(run_b->map),ERROR);
+        array_in_place_reverse(array_a, cdll_a->total); 
+        array_in_place_reverse(array_b, cdll_b->total); 
+
+        i->left = 0;
+        i->right = 0;
+        while (i->left < run_a->map_size && i->right < run_b->map_size)
+        {
+            cdl_bottom_up_merge(cdll_a, array_a, run_a, cdll_b, array_b, run_b, i);    
+            print_cdl(cdll_a);
+            print_map(run_a);
+            print_cdl(cdll_b);
+            print_map(run_b);
+
+        }
+        if (run_a->run_nb != 1 && run_b->run_nb != 1)
+        {
+            free(run_a->map);
+            free(run_b->map);
+            free(array_a);
+            free(array_b);
+        }
+    }
+    while (run_a->run_nb != 1 && run_b->run_nb != 1);
+
+    return (free(array_a), free(array_b), SUCCESS);
+}
