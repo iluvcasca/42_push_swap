@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/09 10:44:07 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/09 11:47:30 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -249,6 +249,7 @@ int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a
     int * array_b;
     t_i * i;
 
+    i = malloc(sizeof(*i));
     do
     {
         array_a = cdl2array(cdll_a); 
@@ -262,6 +263,11 @@ int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a
 
         i->left = 0;
         i->right = 0;
+        print_cdl(cdll_a);
+        print_map(run_a);
+        print_cdl(cdll_b);
+        print_map(run_b);
+
         while (i->left < run_a->map_size && i->right < run_b->map_size)
         {
             cdl_bottom_up_merge(cdll_a, array_a, run_a, cdll_b, array_b, run_b, i);    
@@ -281,5 +287,5 @@ int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a
     }
     while (run_a->run_nb != 1 && run_b->run_nb != 1);
 
-    return (free(array_a), free(array_b), SUCCESS);
+    return (free(i), free(array_a), free(array_b), SUCCESS);
 }
