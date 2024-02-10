@@ -7,7 +7,7 @@ random_numbers=()
 # While the length of the array is less than num
 while [[ ${#random_numbers[@]} -lt $num ]]; do
     # Generate a random number
-    random_number=$(( RANDOM % 700 + 1 ))
+    random_number=$(( RANDOM % 5000 + 1 ))
 
     # If the random number is not already in the array, add it
     if ! [[ " ${random_numbers[@]} " =~ " ${random_number} " ]]; then

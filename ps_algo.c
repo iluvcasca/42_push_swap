@@ -6,49 +6,139 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/09 11:47:30 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/10 18:05:55 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
-
 void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b)
 {
     size_t n;
+    size_t size;
+    size_t i = 0;
     size_t j = 0;
     int * array;
+    int * temp;
 
-    n = cdll_a->total;
+    size = cdll_a->total;
     array = cdl2array(cdll_a);
     if (!array)
         return;
-    while (j + 1 < n)
+    while (j + 3 < size)
     {
-        if (array[j] < array[j+1])
+        temp = malloc(sizeof(*temp) * (4));
+        temp = (int *)ft_memcpy(temp, array + j, 4*sizeof(int));
+        temp = bottom_up_merge_sort(temp, 4);
+        if (cdll_a->total <= cdll_b->total)
         {
-            rotate(cdll_a, 'a');
-            rotate(cdll_a, 'a');
+            n = 0;
+            i = 0;
+            while (i < 4)
+            {
+                while (*((int *)(cdll_a->first_node->data)) != temp[i])
+                {
+                    swap(cdll_a, 'a');
+                    if (*((int *)cdll_a->first_node->data) != temp[i])
+                    {
+                        rotate(cdll_a, 'a');
+                        ++n;
+                    }
+                    else 
+                    {
+                        while (n)
+                        {
+                            r_rotate(cdll_a, 'a');
+                            swap(cdll_a, 'a');
+                            --n;
+                        }
+                    }
+                }
+                rotate(cdll_a, 'a');
+                n = 0;
+                j++;
+                i++;
+            }
         }
         else
-    {
-            push(cdll_b, cdll_a, 'b');
-            push(cdll_b, cdll_a, 'b');
+        {
+            n = 0;
+            i = 0;
+            while (i < 4)
+            {
+                while (*((int *)(cdll_a->first_node->data)) != temp[3-i])
+                {
+                    swap(cdll_a, 'a');
+                    if (*((int *)cdll_a->first_node->data) != temp[3-i])
+                    {
+                        rotate(cdll_a, 'a');
+                        ++n;
+                    }
+                    else 
+                    {
+                        while (n)
+                        {
+                            r_rotate(cdll_a, 'a');
+                            swap(cdll_a, 'a');
+                            --n;
+                        }
+                    }
+                }
+                push(cdll_b, cdll_a, 'b');
+                n = 0;
+                j++;
+                i++;
+            }
         }
-        j+=2;
-    }
-    while (cdll_a->total > cdll_b->total)
-    {
-        swap(cdll_a, 'a');
-        push(cdll_b, cdll_a, 'b');
-        push(cdll_b, cdll_a, 'b');
-    }
-    while (cdll_a->total < cdll_b->total)
-    {
-        swap(cdll_b, 'b');
-        push(cdll_a, cdll_b, 'a');
-        push(cdll_a, cdll_b, 'a');
+        print_cdl(cdll_a);
+        print_cdl(cdll_b);
+        free(temp);
     }
     free(array);
 }
+
+// void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b)
+// {
+//     size_t n;
+//     size_t j = 0;
+//     int * array;
+//
+//     n = cdll_a->total;
+//     array = cdl2array(cdll_a);
+//     if (!array)
+//         return;
+//     while (j + 1 < n)
+//     {
+//         if (array[j] < array[j+1])
+//         {
+//             if (cdll_a->total < cdll_b->total)
+//             {
+//                 rotate(cdll_a, 'a');
+//                 rotate(cdll_a, 'a');
+//             }
+//             else
+//             {
+//                 swap(cdll_a, 'a');
+//                 push(cdll_b, cdll_a, 'b');
+//                 push(cdll_b, cdll_a, 'b');
+//             }
+//         }
+//         else
+//         {
+//             if (cdll_a->total < cdll_b->total)
+//             {
+//                 swap(cdll_a, 'a');
+//                 rotate(cdll_a, 'a');
+//                 rotate(cdll_a, 'a');
+//             }
+//             else
+//             {
+//                 push(cdll_b, cdll_a, 'b');
+//                 push(cdll_b, cdll_a, 'b');
+//             }
+//         }
+//         j+=2;
+//     }
+//     free(array);
+// }
 
 void deal2(t_circular_double_link_list * cdll, t_run * run, char list_name)
 {
@@ -200,7 +290,13 @@ void cdl_bottom_up_merge(t_circular_double_link_list * cdll_a, int * array_a, t_
     j = i->left;
     l = i->right;
     direction = 'r';
-    if (run_a->run_nb <= run_b->run_nb)
+    if (run_a->run_nb == 1 && run_b->run_nb == 1)
+    {
+        direction = 'l';
+        run_a->run_nb++;
+        run_b->run_nb--;
+    }
+    else if (i->end%2 && run_b->run_nb != 1/* run_a->run_nb <= run_b->run_nb */)
     {
         direction = 'l';
         run_a->run_nb++;
@@ -267,7 +363,8 @@ int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a
         print_map(run_a);
         print_cdl(cdll_b);
         print_map(run_b);
-
+   
+        i->end = 1;
         while (i->left < run_a->map_size && i->right < run_b->map_size)
         {
             cdl_bottom_up_merge(cdll_a, array_a, run_a, cdll_b, array_b, run_b, i);    
@@ -275,7 +372,7 @@ int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a
             print_map(run_a);
             print_cdl(cdll_b);
             print_map(run_b);
-
+            i->end++;
         }
         if (run_a->run_nb != 1 && run_b->run_nb != 1)
         {
@@ -285,7 +382,7 @@ int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a
             free(array_b);
         }
     }
-    while (run_a->run_nb != 1 && run_b->run_nb != 1);
+    while (run_a->run_nb/*  != 1  */&& run_b->run_nb/*  != 1 */);
 
-    return (free(i), free(array_a), free(array_b), SUCCESS);
+    return (free(i),/* free(i), free(array_a), free(array_b),  */SUCCESS);
 }

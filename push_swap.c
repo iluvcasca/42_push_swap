@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:58:30 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/09 11:49:27 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/10 18:07:54 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -54,12 +54,12 @@ int main(int argc, char ** argv)
         print_map(run_b);
         ft_printf("%u\n", run_b->run_nb);
 
-        free(run_a->map);
-        free(run_b->map);
-        deal2(&cdl_list_a,run_a, 'a');
-        deal2(&cdl_list_b, run_b, 'b');
-        set_run(&cdl_list_a, run_a);
-        set_run(&cdl_list_b, run_b);
+        // free(run_a->map);
+        // free(run_b->map);
+        // deal2(&cdl_list_a,run_a, 'a');
+        // deal2(&cdl_list_b, run_b, 'b');
+        // set_run(&cdl_list_a, run_a);
+        // set_run(&cdl_list_b, run_b);
 
         print_cdl(&cdl_list_a);
         print_map(run_a);
@@ -73,8 +73,8 @@ int main(int argc, char ** argv)
         cdl_bottom_up_merge_sort(&cdl_list_a,run_a,&cdl_list_b, run_b);
 
         free (array);
-        free (run_a->map);
-        free (run_b->map);
+        // free (run_a->map);
+        // free (run_b->map);
 
         set_run(&cdl_list_a, run_a);
         set_run(&cdl_list_b, run_b);
