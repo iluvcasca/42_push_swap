@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:01:40 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/05 19:55:25 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/11 10:33:42 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -54,7 +54,8 @@ int push(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdl
     }
     cdll_b->total--;
     cdll_a->pf_insert_beginning(cdll_a, temp);
-    ft_printf("p%c\n", list_name);
+    if (list_name)
+        ft_printf("p%c\n", list_name);
     return (SUCCESS);
 }
 

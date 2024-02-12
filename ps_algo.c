@@ -6,383 +6,210 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/10 18:05:55 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/12 11:18:25 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
-void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b)
+
+int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank)
+{
+    int * array;
+    t_double_link_node * node;
+    t_double_link_node * rank_node;
+    size_t i;
+
+    array = cdl2array(cdll);
+    array = bottom_up_merge_sort(array, cdll->total);
+    i = 0;
+    node = cdll->first_node;
+    do {
+        while (*((int *)node->data) != array[i])
+            ++i;
+        if (!add_int2node(rank, rank_node, i))
+            return(cdl_free_list(cdll),cdl_free_list(rank),free(array),ERROR);
+        node = node->next;
+        i = 0;
+    } while (node != cdll->first_node);
+    return (free(array),SUCCESS);
+}
+
+void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b)
 {
     size_t n;
-    size_t size;
-    size_t i = 0;
-    size_t j = 0;
-    int * array;
-    int * temp;
+    size_t i;
+    t_circular_double_link_list * rank_temp;
+    t_circular_double_link_list * garbage;
 
-    size = cdll_a->total;
-    array = cdl2array(cdll_a);
-    if (!array)
-        return;
-    while (j + 3 < size)
+    rank_temp = malloc(sizeof(*rank_temp));
+    garbage = malloc(sizeof(*garbage));
+    cdl_init_list(rank_temp);
+    cdl_init_list(garbage);
+    while (cdll_a->total != 3)
     {
-        temp = malloc(sizeof(*temp) * (4));
-        temp = (int *)ft_memcpy(temp, array + j, 4*sizeof(int));
-        temp = bottom_up_merge_sort(temp, 4);
-        if (cdll_a->total <= cdll_b->total)
+        n = cdll_a->total - 1;
+        i = 0;
+        rank(cdll_a, rank_temp);
+        while(i <= n && cdll_a->total != 3)
         {
-            n = 0;
-            i = 0;
-            while (i < 4)
+            size_t t = *((int *)rank_temp->first_node->data);
+            if (*((int *)rank_temp->first_node->data) <= 2*(n/3) && *((int *)rank_temp->first_node->data) > n/3)
             {
-                while (*((int *)(cdll_a->first_node->data)) != temp[i])
-                {
-                    swap(cdll_a, 'a');
-                    if (*((int *)cdll_a->first_node->data) != temp[i])
-                    {
-                        rotate(cdll_a, 'a');
-                        ++n;
-                    }
-                    else 
-                    {
-                        while (n)
-                        {
-                            r_rotate(cdll_a, 'a');
-                            swap(cdll_a, 'a');
-                            --n;
-                        }
-                    }
-                }
+                push(rank_b, rank_a, 0);
+                push(cdll_b, cdll_a, 'b');
+                push(garbage, rank_temp, 0);
+            }
+            else if (*((int *)rank_temp->first_node->data) <= 2*(n/3))
+            {
+                push(rank_b, rank_a, 0);
+                push(garbage, rank_temp, 0);
+                rotate(rank_b, 0);
+                push(cdll_b, cdll_a, 'b');
+                rotate(cdll_b, 'b');
+            }
+            else
+            {
+                rotate(rank_a, 0);
+                rotate(rank_temp, 0);
                 rotate(cdll_a, 'a');
-                n = 0;
-                j++;
-                i++;
             }
+            ++i;    
         }
-        else
-        {
-            n = 0;
-            i = 0;
-            while (i < 4)
-            {
-                while (*((int *)(cdll_a->first_node->data)) != temp[3-i])
-                {
-                    swap(cdll_a, 'a');
-                    if (*((int *)cdll_a->first_node->data) != temp[3-i])
-                    {
-                        rotate(cdll_a, 'a');
-                        ++n;
-                    }
-                    else 
-                    {
-                        while (n)
-                        {
-                            r_rotate(cdll_a, 'a');
-                            swap(cdll_a, 'a');
-                            --n;
-                        }
-                    }
-                }
-                push(cdll_b, cdll_a, 'b');
-                n = 0;
-                j++;
-                i++;
-            }
-        }
-        print_cdl(cdll_a);
-        print_cdl(cdll_b);
-        free(temp);
+        cdl_free_list(rank_temp);
+        // print_cdl(rank_a);
+        // print_cdl(rank_b);
     }
-    free(array);
+    cdl_free_list(garbage);
+    free(rank_temp);
+    free(garbage);
 }
 
-// void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b)
-// {
-//     size_t n;
-//     size_t j = 0;
-//     int * array;
-//
-//     n = cdll_a->total;
-//     array = cdl2array(cdll_a);
-//     if (!array)
-//         return;
-//     while (j + 1 < n)
-//     {
-//         if (array[j] < array[j+1])
-//         {
-//             if (cdll_a->total < cdll_b->total)
-//             {
-//                 rotate(cdll_a, 'a');
-//                 rotate(cdll_a, 'a');
-//             }
-//             else
-//             {
-//                 swap(cdll_a, 'a');
-//                 push(cdll_b, cdll_a, 'b');
-//                 push(cdll_b, cdll_a, 'b');
-//             }
-//         }
-//         else
-//         {
-//             if (cdll_a->total < cdll_b->total)
-//             {
-//                 swap(cdll_a, 'a');
-//                 rotate(cdll_a, 'a');
-//                 rotate(cdll_a, 'a');
-//             }
-//             else
-//             {
-//                 push(cdll_b, cdll_a, 'b');
-//                 push(cdll_b, cdll_a, 'b');
-//             }
-//         }
-//         j+=2;
-//     }
-//     free(array);
-// }
-
-void deal2(t_circular_double_link_list * cdll, t_run * run, char list_name)
+void sort_3(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a)
 {
-    int * array;
-    size_t i;
-
-    i = 0;
-
-    while (i < run->map_size)
-    {
-        array = cdl2array(cdll); 
-        set_run(cdll, run);
-        if (!run->map ||!array )
-            return (free(array), free(run->map));
-        array_in_place_reverse(run->map, run->map_size); 
-
-        if (run->map[0] == 'x' && run->map[1] == 'x')
-        {
-            swap(cdll, list_name);  
-            rotate_n(cdll, list_name, 2);
-            i+=2;
-            print_cdl(cdll);
-        }
-        else if (run->map[0] == 'x' && run->map[run->map_size-1] == 'x')
-        {
-            r_rotate(cdll, list_name);
-            swap(cdll, list_name);  
-            rotate_n(cdll, list_name, 2);
-            i+=2;
-            print_cdl(cdll);
-        }
-        else if (run->map[0] == 'e' && run->map[1] == 's' && run->map[3] == 's' && array[1] <= array[3])
-        {
-            rotate(cdll, list_name); 
-            swap(cdll, list_name);
-            r_rotate(cdll, list_name);
-            if (array[0] > array[2])
-                swap(cdll, list_name);
-            rotate(cdll, list_name);
-            rotate_n(cdll, list_name, 3);
-            i+=4;
-            print_cdl(cdll);
-        }
-        else if (run->map[0] == 'e' && run->map[1] == 's' && run->map[3] == 's' && array[1] > array[3])
-        {
-            rotate(cdll, list_name); 
-            swap(cdll, list_name);
-            r_rotate(cdll, list_name);
-            if (array[0] > array[2])
-                swap(cdll, list_name);
-            rotate(cdll, list_name);
-            rotate(cdll, list_name);
-            swap(cdll, list_name);
-            rotate_n(cdll, list_name, 2);
-            i+=4;
-            print_cdl(cdll);
-        }
-        else if (run->map[0] == 'e' && run->map[1] == 's' 
-            && run->map[run->map_size - 1] == 's' && run->map[run->map_size - 2] == 'e' && array[run->map_size - 1] <= array[1])
-        {
-            r_rotate(cdll, list_name); 
-            swap(cdll, list_name);
-            r_rotate(cdll, list_name);
-            if (array[run->map_size - 2] > array[0])
-                swap(cdll, list_name);
-            rotate(cdll, list_name);
-            rotate_n(cdll, list_name, 3);
-            i+=2;
-            print_cdl(cdll);
-        }
-        else if (run->map[0] == 'e' && run->map[1] == 's' 
-            && run->map[run->map_size - 1] == 's' && run->map[run->map_size - 2] == 'e' && array[run->map_size - 1] > array[1])
-        {
-            r_rotate(cdll, list_name); 
-            swap(cdll, list_name);
-            r_rotate(cdll, list_name);
-            if (array[run->map_size - 2] > array[0])
-                swap(cdll, list_name);
-            rotate(cdll, list_name);
-            rotate(cdll, list_name);
-            swap(cdll, list_name);
-            rotate_n(cdll, list_name, 2);
-            i+=2;
-            print_cdl(cdll);
-        }
-        else
-        {
-            break;
-        }
-        free(array);
-        free(run->map);
-    }
-    if (i != run->map_size)
-    {
-        free(array);
-        free(run->map);
-    }
-}
-
-int set_run(t_circular_double_link_list * cdll_a, t_run * run_a)
-{
-    int * array_a;
-    size_t i;
-    size_t j;
-
-    i = 0;
-    j = 0;
-    run_a->map = malloc(sizeof(int)*cdll_a->total);
-    run_a->map_size = cdll_a->total;
-    run_a->run_nb = 0;
-
-    array_a = cdl2array(cdll_a); 
-    if (!run_a->map || !array_a)
-        return (free(run_a->map),free(array_a), ERROR);
-    array_in_place_reverse(array_a, cdll_a->total);
-
-    while (i < run_a->map_size)
-    {
-        j = i;
-        while (j + 1 < run_a->map_size && array_a[j] >= array_a[j+1])
-        {
-            run_a->map[j] = '0';
-            j++;
-        }
-        if (j == i)
-        {
-            run_a->map[i] = 'x';
-            run_a->run_nb++;
-        }
-        else
-        {
-            run_a->map[i] = 's';
-            run_a->map[j] = 'e';
-            run_a->run_nb++;
-        }
-        i+=(j-i);
-        i++;
-    }
-    return (free(array_a), SUCCESS);
-}
-
-void cdl_bottom_up_merge(t_circular_double_link_list * cdll_a, int * array_a, t_run * run_a, t_circular_double_link_list * cdll_b, int * array_b, t_run * run_b, t_i * i)
-{
-    size_t j;
-    size_t k;
-    size_t l;
-    char direction;
-
-    j = i->left;
-    l = i->right;
-    direction = 'r';
-    if (run_a->run_nb == 1 && run_b->run_nb == 1)
-    {
-        direction = 'l';
-        run_a->run_nb++;
-        run_b->run_nb--;
-    }
-    else if (i->end%2 && run_b->run_nb != 1/* run_a->run_nb <= run_b->run_nb */)
-    {
-        direction = 'l';
-        run_a->run_nb++;
-        run_b->run_nb--;
-    }
-    else
-    {
-        run_a->run_nb--;
-        run_b->run_nb++;
-    }
-    while (run_a->map[i->left] != 'e' && run_a->map[i->left] != 'x')
-       i->left++; 
-    while (run_b->map[i->right] != 'e' && run_b->map[i->right] != 'x')
-       i->right++; 
-    while (j <= i->left || l <= i->right)
-    {
-        if (j <= i->left && (l > i->right || array_a[j] > array_b[l]))
-        {
-            if (direction == 'l')
-                r_rotate(cdll_a, 'a');
-            else
-            {
-                r_rotate(cdll_a, 'a');
-                push(cdll_b, cdll_a, 'b');
-            }
-            ++j;
-        }
-        else
-        {
-            if (direction == 'r')
-                r_rotate(cdll_b, 'b');
-            else
-            {
-                r_rotate(cdll_b, 'b');
-                push(cdll_a, cdll_b, 'a');
-            }
-            ++l;
-        }
-    }
-    i->left = j;
-    i->right = l;
-}
-int cdl_bottom_up_merge_sort(t_circular_double_link_list * cdll_a, t_run * run_a, t_circular_double_link_list * cdll_b, t_run * run_b)
-{
-    int * array_a;
-    int * array_b;
-    t_i * i;
-
-    i = malloc(sizeof(*i));
-    do
-    {
-        array_a = cdl2array(cdll_a); 
-        array_b = cdl2array(cdll_b); 
-        set_run(cdll_a, run_a);
-        set_run(cdll_b, run_b);
-        if (!run_a->map ||!array_a || !run_b->map ||!array_b)
-            return (free(array_a),free(array_b), free(run_a->map), free(run_b->map),ERROR);
-        array_in_place_reverse(array_a, cdll_a->total); 
-        array_in_place_reverse(array_b, cdll_b->total); 
-
-        i->left = 0;
-        i->right = 0;
-        print_cdl(cdll_a);
-        print_map(run_a);
-        print_cdl(cdll_b);
-        print_map(run_b);
+    t_circular_double_link_list rank_temp;
+    int * temp_rank;
    
-        i->end = 1;
-        while (i->left < run_a->map_size && i->right < run_b->map_size)
-        {
-            cdl_bottom_up_merge(cdll_a, array_a, run_a, cdll_b, array_b, run_b, i);    
-            print_cdl(cdll_a);
-            print_map(run_a);
-            print_cdl(cdll_b);
-            print_map(run_b);
-            i->end++;
-        }
-        if (run_a->run_nb != 1 && run_b->run_nb != 1)
-        {
-            free(run_a->map);
-            free(run_b->map);
-            free(array_a);
-            free(array_b);
-        }
+    cdl_init_list(&rank_temp);
+    rank(cdll_a, &rank_temp);
+    temp_rank = cdl2array(&rank_temp);
+    if (temp_rank[0] == 2 && temp_rank[1] == 1 && temp_rank[2] == 0)
+    {
+        swap(cdll_a, 'a');
+        swap(rank_a, 0);
+        r_rotate(cdll_a, 'a');
+        r_rotate(rank_a, 0);
     }
-    while (run_a->run_nb/*  != 1  */&& run_b->run_nb/*  != 1 */);
+    else if (temp_rank[0] == 1 && temp_rank[1] == 0 && temp_rank[2] == 2)
+    {
+        swap(cdll_a, 'a');
+        swap(rank_a, 0);
+    }
+    else if (temp_rank[0] == 1 && temp_rank[1] == 2 && temp_rank[2] == 0)
+    {
+        r_rotate(cdll_a, 'a');
+        r_rotate(rank_a, 0);
+    }
+    else if (temp_rank[0] == 2 && temp_rank[1] == 0 && temp_rank[2] == 1)
+    {
+        rotate(cdll_a, 'a');
+        rotate(rank_a, 0);
+    }
+    else if (temp_rank[0] == 0 && temp_rank[1] == 2 && temp_rank[2] == 1)
+    {
+        rotate(cdll_a, 'a');
+        rotate(rank_a, 0);
+        swap(cdll_a, 'a');
+        swap(rank_a, 0);
+        r_rotate(cdll_a, 'a');
+        r_rotate(rank_a, 0);
+    }
+    cdl_free_list(&rank_temp);
+    free(temp_rank);
+}
 
-    return (free(i),/* free(i), free(array_a), free(array_b),  */SUCCESS);
+void sort(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b)
+{
+    size_t top;
+    size_t bottom;
+    int current_top;
+    int current_bottom;
+    t_double_link_node * search_node;
+    size_t bottom_el;
+    size_t top_el;
+
+    bottom_el = 0;
+    top_el = 0;
+    while (cdll_b->total)
+    {
+        print_cdl(rank_a);
+        print_cdl(rank_b);
+
+        top = 0;
+        bottom = 0;
+        if (*((int *)rank_a->first_node->data) != *((int *)rank_a->first_node->next->data) - 1)
+        {
+            rotate(rank_a, 0);
+            rotate(cdll_a, 'a');
+            ++top_el;
+        }
+        else if (*((int *)rank_a->last_node->data) != *((int *)rank_a->last_node->previous->data) + 1)
+        {
+            r_rotate(rank_a, 0);
+            r_rotate(cdll_a, 'a');
+            ++bottom_el;
+        }
+        current_top = *((int *)rank_a->first_node->data);
+        current_bottom = *((int *)rank_a->last_node->data);
+        search_node = rank_b->first_node;
+        while (*((int *)search_node->data) != current_top - 1 
+            && *((int *)search_node->data) != current_bottom + 1)
+        {
+            search_node = search_node->next;
+            ++top;
+        }
+        search_node = rank_b->last_node;
+        while (*((int *)search_node->data) != current_top - 1 
+            && *((int *)search_node->data) != current_bottom + 1)
+        {
+            search_node = search_node->previous;
+            ++bottom;
+        }
+        if (bottom < top)
+        {
+            r_rotate_n(cdll_b, 'b', bottom + 1);
+            r_rotate_n(rank_b, 0, bottom + 1);
+            push(cdll_a, cdll_b, 'a');
+            push(rank_a, rank_b, 0);
+        }
+        else
+        {
+            rotate_n(cdll_b, 'b', top);
+            rotate_n(rank_b, 0, top);
+            push(cdll_a, cdll_b, 'a');
+            push(rank_a, rank_b, 0);
+        }
+        if (*((int *)rank_a->first_node->data) == current_bottom + 1 && *((int *)rank_a->first_node->data) != current_top - 1)
+        {
+            rotate(cdll_a, 'a');
+            rotate(rank_a, 0);
+            ++bottom_el;
+        }
+        else if (*((int *)rank_a->last_node->data) == current_top - 1 && *((int *)rank_a->first_node->data) != current_bottom + 1)
+        {
+            r_rotate(cdll_a, 'a');
+            r_rotate(rank_a, 0);
+            ++top_el;
+        }
+        if (*((int *)rank_a->last_node->data) == *((int *)rank_a->first_node->data) - 1)
+        {
+            r_rotate_n(cdll_a, 'a', bottom_el);
+            r_rotate_n(rank_a, 0, bottom_el);
+            bottom_el = 0;
+        }
+        else if (*((int *)rank_a->first_node->data) == *((int *)rank_a->last_node->data) + 1)
+        {
+            rotate_n(cdll_a, 'a', top_el);
+            rotate_n(rank_a, 0, top_el);
+            top_el = 0;
+        } 
+    }
 }
