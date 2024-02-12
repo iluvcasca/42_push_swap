@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/12 10:44:17 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/12 18:53:31 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ void update_merge(size_t * width, int ** array, int ** array_cpy);
 
 // algo
 int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank);
-void deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b);
-void sort_3(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a);
-void sort(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b);
-int set_run(t_circular_double_link_list * cdll_a, t_run * run_a);
-void deal2(t_circular_double_link_list * cdll, t_run * run, char list_name);
-void print_map(t_run * run);
+int * lis(t_circular_double_link_list * cdll_a);
+int deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b, int * lis);
+size_t max_size(size_t a, size_t b);
+int sort(t_circular_double_link_list * cdll_a ,t_circular_double_link_list * rank_a,t_circular_double_link_list *cdll_b, t_circular_double_link_list * rank_b);
+int * compute_mov(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b);
+void reorder(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a);
+int abs(int a);
 #endif
