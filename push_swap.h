@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/13 15:43:32 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/14 12:51:47 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_run {
     size_t run_nb;
 } t_run;
 
-//temp 
+//utils 
 void print_array(int * array, size_t size);
 void print_cdl(t_circular_double_link_list * cdl_list);
 void print_cdl_str(t_circular_double_link_list * cdl_list);
@@ -80,10 +80,18 @@ int abs(int a);
 
 void count_ops_r(t_circular_double_link_list * cdl_list, t_double_link_node ** node, size_t * count, char ops);
 void insert_rr(t_circular_double_link_list * cdl_list, t_double_link_node * node);
-void optimize_ops_r(t_circular_double_link_list * cdl_list);
+int optimize_ops_r(t_circular_double_link_list * cdl_list);
+void process_ops_r(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
+void insert_while_rr(t_circular_double_link_list * cdl_list, t_double_link_node * cdl_node, size_t * count_rr);
+void del_r(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, size_t * count_rr);
+void iter_ops_rb(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
+void iter_ops_ra(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
 
 void count_ops_rr(t_circular_double_link_list * cdl_list, t_double_link_node ** node, size_t * count, char ops);
 void insert_rrr(t_circular_double_link_list * cdl_list, t_double_link_node * node);
-void optimize_ops_rr(t_circular_double_link_list * cdl_list);
-
+int optimize_ops_rr(t_circular_double_link_list * cdl_list);
+void process_ops_rr(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
+void iter_ops_rrb(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
+void iter_ops_rra(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
+void insert_while_rrr(t_circular_double_link_list * cdl_list, t_double_link_node * cdl_node, size_t * count_rr);
 #endif
