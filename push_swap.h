@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/21 10:34:34 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/21 17:29:44 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ typedef struct s_cdll_pair {
     t_circular_double_link_list * a;
     t_circular_double_link_list * b;
 } t_cdll_pair;
+
+typedef struct s_array_pair {
+    int * a;
+    int * b;
+} t_array_pair;
+
+typedef struct s_index_pair {
+    size_t  i;
+    size_t  j;
+} t_index_pair;
 
 typedef struct s_cdl_i {
     size_t bottom;

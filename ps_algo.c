@@ -6,10 +6,11 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/21 10:49:22 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/21 17:46:29 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
+#include <stddef.h>
 #include <stdlib.h>
 
 int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank)
@@ -224,66 +225,98 @@ void get_distance(t_circular_double_link_list * cdll, int * mov)
         ++i;
     }
 }
-
-int * compute_mov(t_cdll_pair * cdll, t_cdll_pair * rank)
+void compute_mov3(size_t i, int * insert, t_cdll_pair * cdll, t_array_pair * array)
 {
-    size_t i;
     size_t j;
-    size_t sum_current;
-    size_t sum;
-    int * mov = malloc(sizeof(*mov) * 2);
-    int * array_b;
-    int * mov_b;
-    int * array_a;
-    int * mov_a;
-    int insert = max_size(cdll->a->total, cdll->b->total);
 
-    mov_b = cdl2array(cdll->b);
-    array_b = cdl2array(rank->b);
-    mov_a = cdl2array(cdll->a);
-    array_a = cdl2array(rank->a);
+    *insert = max_size(cdll->a->total, cdll->b->total);
+    j = 0;
+    while (j < cdll->a->total)
+    {
+        if (abs(array->a[j] - array->b[i]) <= *insert)
+            *insert = abs(array->a[j] - array->b[i]);
+        ++j;
+    }
+}
 
-    get_distance(cdll->b, mov_b);
-    get_distance(cdll->a, mov_a);
-    i = 0; 
-    sum_current = max_size(cdll->b->total, cdll->a->total);
+void compute_mov2(size_t i, size_t j,t_array_pair * mov_, size_t * csum_sum)
+{
+    if (mov_->a[j] < 0 && mov_->b[i] < 0)
+        csum_sum[1] = max_size((size_t){mov_->a[j]*-1}, (size_t){mov_->b[i]*-1}); 
+    else if (mov_->a[j] >= 0 && mov_->b[i] < 0)
+        csum_sum[1] = mov_->a[j] + mov_->b[i]*-1;
+    else if (mov_->a[j] < 0 && mov_->b[i] >= 0)
+        csum_sum[1] = mov_->b[i] + mov_->a[j]*-1;
+    else
+        csum_sum[1] = max_size((size_t)mov_->a[j],(size_t)mov_->b[i]);
+}
+
+void compute_mov4(size_t * j, size_t * i, t_array_pair * array, t_cdll_pair * cdll)
+{
+    if (array->a[*j] - array->b[*i] < 0 && *j + 1 < cdll->a->total)
+        ++(*j);
+    else if (array->a[*j] - array->b[*i] < 0 && *j + 1 == cdll->a->total)
+        *j = 0;
+}
+
+void compute_mov5(t_array_pair * mov_, int * mov, size_t i, size_t j)
+{
+    mov[0] = mov_->a[j]; 
+    mov[1] = mov_->b[i]; 
+}
+
+int compute_mov6(size_t * i, t_cdll_pair * cdll, int * insert, size_t ** csum_sum)
+{
+    *i = 0; 
+    *insert = max_size(cdll->a->total, cdll->b->total);
+    *csum_sum = malloc(sizeof(*csum_sum)*2);
+    if (!*csum_sum)
+        return 0;
+    (*csum_sum)[0] = max_size(cdll->b->total, cdll->a->total);
+    return 1;
+}
+
+void compute_mov1(t_cdll_pair * cdll, t_array_pair * mov_,t_array_pair * array, int * mov)
+{
+    size_t j;
+    size_t i;
+    size_t * csum_sum;
+    int insert;
+
+    if (!compute_mov6(&i, cdll, &insert, &csum_sum))
+        return;
     while (i < cdll->b->total)
     {
-        insert = max_size(cdll->a->total, cdll->b->total);
+        compute_mov3(i, &insert, cdll, array);
         j = 0;
-        while (j < cdll->a->total)
-        {
-            if (abs(array_a[j] - array_b[i]) <= insert)
-                insert = abs(array_a[j] - array_b[i]);
+        while (j < cdll->a->total && abs(array->a[j] - array->b[i]) != insert)
             ++j;
-        }
-        j = 0;
-        while (j < cdll->a->total && abs(array_a[j] - array_b[i]) != insert)
+        compute_mov4(&j, &i, mov_, cdll);
+        compute_mov2(i, j, mov_, csum_sum);
+        if (csum_sum[1] < csum_sum[0])
         {
-            ++j;
-        }
-        if (array_a[j] - array_b[i] < 0 && j + 1 < cdll->a->total)
-            ++j;
-        else if (array_a[j] - array_b[i] < 0 && j + 1 == cdll->a->total)
-            j = 0;
-        if (mov_a[j] < 0 && mov_b[i] < 0)
-            sum = max_size((size_t){mov_a[j]*-1}, (size_t){mov_b[i]*-1}); 
-        else if (mov_a[j] >= 0 && mov_b[i] < 0)
-            sum = mov_a[j] + mov_b[i]*-1;
-        else if (mov_a[j] < 0 && mov_b[i] >= 0)
-            sum = mov_b[i] + mov_a[j]*-1;
-        else
-            sum = max_size((size_t)mov_a[j],(size_t)mov_b[i]);
-        if (sum < sum_current)
-        {
-            sum_current = sum;
-            mov[0] = mov_a[j]; 
-            mov[1] = mov_b[i]; 
+            csum_sum[0] = csum_sum[1];
+            compute_mov5(mov_, mov, i, j);
         }
         ++i; 
     }
+    free(csum_sum);
+}
 
-    return (free(array_a), free(array_b), free(mov_a), free(mov_b), mov);
+int * compute_mov(t_cdll_pair * cdll, t_cdll_pair * rank)
+{
+    int * mov = malloc(sizeof(*mov) * 2);
+    t_array_pair array;
+    t_array_pair mov_;
+
+    mov_.b = cdl2array(cdll->b);
+    array.b = cdl2array(rank->b);
+    mov_.a = cdl2array(cdll->a);
+    array.a = cdl2array(rank->a);
+    get_distance(cdll->b, mov_.b);
+    get_distance(cdll->a, mov_.a);  
+    compute_mov1(cdll, &mov_, &array, mov); 
+    return (free(array.a), free(array.b), free(mov_.a), free(mov_.b), mov);
 }
 
 size_t max_size(size_t a, size_t b)
