@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:24:27 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/14 12:49:39 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/21 10:11:59 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 
 int main(int argc, char ** argv)
 {
-    t_circular_double_link_list cdl_list_a;
-    t_circular_double_link_list cdl_list_b; // how much can the stack handle
-    t_circular_double_link_list rank_a;
-    t_circular_double_link_list rank_b;
+    t_cdll_pair cdl_list;
+    t_cdll_pair rank_;
     t_circular_double_link_list ops;
     int * array;
-
-    int status;
     
     argc = 2;
     // argv[1] = "2623 1363 1960 4313 1800 2337 2450 2675 475 542 1659 316 3132 998 4295 1215 4135 4644 474 1248 4895 897 2821 3706 3648 1288 1250 4521 341 2873 1333 2254 3643 3871 4177 3115 661 4946 1201 945 4844 3891 1294 3158 3442 2210 537 796 1051 3084";
@@ -35,42 +31,42 @@ int main(int argc, char ** argv)
     // argv[1] = "12 475 562 22 397 285 135 215 56 603 432 100 293";
     // argv[1] = "627 533 574 438 174 582 591 310 4 367 89 494 275 15 445 434 142 362 640 408";
     char * s = "----------------------------\n";
-    //
-    cdl_init_list(&cdl_list_a);
-    cdl_init_list(&cdl_list_b);
-    cdl_init_list(&rank_a);
-    cdl_init_list(&rank_b);
+
+    cdl_list.a = malloc(sizeof(*cdl_list.a));
+    cdl_list.b = malloc(sizeof(*cdl_list.b));
+    rank_.a = malloc(sizeof(*rank_.a));
+    rank_.b = malloc(sizeof(*rank_.b));
+
+    cdl_init_list(cdl_list.a);
+    cdl_init_list(cdl_list.b);
+    cdl_init_list(rank_.a);
+    cdl_init_list(rank_.b);
 
     cdl_init_list(&ops);
 
-    if (argc > 1)
-        status = parse_input(argc, argv, &cdl_list_a); 
-    else
-        return (ERROR);
-    //
-    if (status)
+    if (argc > 1 && parse_input(argc, argv, cdl_list.a))
     {
         // ft_printf("%sInput\n%s", s, s);
-        // print_cdl(&cdl_list_a);
+        // print_cdl(cdl_list.a);
 
-        rank(&cdl_list_a, &rank_a);
+        rank(cdl_list.a, rank_.a);
 
-        // print_cdl(&rank_a);
+        // print_cdl(rank_.a);
 
-        array = lis(&cdl_list_a);
+        array = lis(cdl_list.a);
         // print_array(array, cdl_list_a.total);
 
-        deal(&cdl_list_a, &rank_a, &cdl_list_b, &rank_b, array, &ops);
-        // print_cdl(&rank_a);
-        // print_cdl(&rank_b);
-        sort(&cdl_list_a, &rank_a, &cdl_list_b, &rank_b, &ops);
-        cdl_free_list(&rank_a);
-        rank(&cdl_list_a, &rank_a);
-        // print_cdl(&rank_a);
-        reorder(&cdl_list_a, &rank_a, &ops);
-        cdl_free_list(&rank_a);
-        rank(&cdl_list_a, &rank_a);
-        // print_cdl(&rank_a);
+        deal(&cdl_list, &rank_, array, &ops);
+        // print_cdl(rank_.a);
+        // print_cdl(rank_.b);
+        sort(&cdl_list, &rank_, &ops);
+        cdl_free_list(rank_.a);
+        rank(cdl_list.a, rank_.a);
+        // print_cdl(rank_.a);
+        reorder(cdl_list.a, rank_.a, &ops);
+        cdl_free_list(rank_.a);
+        rank(cdl_list.a, rank_.a);
+        // print_cdl(rank_.a);
         // print_cdl_str(&ops);
         optimize_ops_r(&ops);
         optimize_ops_rr(&ops);
@@ -79,11 +75,13 @@ int main(int argc, char ** argv)
         print_cdl_str(&ops);
         free(array);
         cdl_free_list(&ops);
-        cdl_free_list(&rank_a);
-        cdl_free_list(&cdl_list_a);
-        cdl_free_list(&cdl_list_b);
-        cdl_free_list(&rank_b);
+        cdl_free_list(rank_.a);
+        cdl_free_list(cdl_list.a);
+        cdl_free_list(cdl_list.b);
+        cdl_free_list(rank_.b);
     }
-    return (SUCCESS);
+    else
+        return (free(cdl_list.a),free(cdl_list.b),free(rank_.a),free(rank_.b),ERROR);
+    return (free(cdl_list.a),free(cdl_list.b),free(rank_.a),free(rank_.b),SUCCESS);
 }
 
