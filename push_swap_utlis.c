@@ -6,11 +6,26 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:52:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/14 09:54:47 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:12:02 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+size_t max_size(size_t a, size_t b)
+{
+    if (a >= b)
+        return a;
+    else
+        return b;
+}
+
+int abs(int a)
+{
+    if (a < 0)
+        return (a*-1);
+    return (a);
+}
 
 void print_array(int * array, size_t size)
 {
@@ -53,6 +68,6 @@ void print_cdl_str(t_circular_double_link_list * cdl_list)
             ft_printf("%s\n", ((char *)cdl_node->data));
             cdl_node = cdl_node->next;
         } while (cdl_node->next != cdl_list->first_node);
-        ft_printf("%s", ((char *)cdl_node->data));
+        ft_printf("%s\n", ((char *)cdl_node->data));
     }
 }

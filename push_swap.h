@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/14 12:51:47 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:15:22 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 # define PUSH_SWAP
 
 #include "libft/mylibc.h"
+
+typedef struct s_vars {
+    t_circular_double_link_list * cdl_list_a;
+    t_circular_double_link_list * cdl_list_b;
+    t_circular_double_link_list * rank_a;
+    t_circular_double_link_list * rank_b;
+    t_circular_double_link_list * ops;
+    int * array;
+} t_vars;
+
+typedef struct s_lis_vars {
+    int * lis ;
+    int * cdl_array;
+    int * lis_count;
+    int i ;
+    size_t j;
+    size_t lis_max;
+    size_t lis_max_index;
+} t_lis_vars;
 
 typedef struct s_i {
     size_t left;
@@ -28,7 +47,6 @@ typedef struct s_cdl_i {
     size_t end;
     size_t * run_left;
     size_t * run_right;
-
 } t_cdl_i;
 
 typedef struct s_run {
@@ -71,9 +89,9 @@ void update_merge(size_t * width, int ** array, int ** array_cpy);
 // algo
 int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank);
 int * lis(t_circular_double_link_list * cdll_a);
-int deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b, int * lis, t_circular_double_link_list * ops);
+int deal(t_vars * vars);
 size_t max_size(size_t a, size_t b);
-int sort(t_circular_double_link_list * cdll_a ,t_circular_double_link_list * rank_a,t_circular_double_link_list *cdll_b, t_circular_double_link_list * rank_b, t_circular_double_link_list * ops);
+void sort(t_vars * vars);
 int * compute_mov(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b);
 void reorder(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * ops);
 int abs(int a);
