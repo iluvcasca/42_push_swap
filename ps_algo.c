@@ -6,12 +6,10 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/21 17:46:29 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/02/13 10:39:33 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
-#include <stddef.h>
-#include <stdlib.h>
 
 int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank)
 {
@@ -35,12 +33,18 @@ int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank)
     return (free(array),SUCCESS);
 }
 
-void count_lis(int * lis_count, int * cdl_array, size_t n)
+int * lis(t_circular_double_link_list * cdll_a)
 {
+    int * lis = malloc(sizeof(*lis) * cdll_a->total);
+    int * cdl_array = cdl2array(cdll_a);
+    int lis_count[cdll_a->total];
     int i = 0;
     size_t j = 0;
+    size_t lis_max = 1;
+    size_t lis_max_index = 0;
 
-    while (i < n)
+    ft_memset(lis, 0, sizeof(*lis) * cdll_a->total);
+    while (i < cdll_a->total)
     {
         lis_count[i] = 1;
         j = 0;
@@ -52,83 +56,35 @@ void count_lis(int * lis_count, int * cdl_array, size_t n)
         }
         ++i;
     }
-}
-
-void get_lis_max(size_t * max, int * lis_count, size_t n)
-{
-    int i = 0;
-
-    while (i < n)
+    i = 0;
+    while (i < cdll_a->total)
     {
-        if (max[0] < lis_count[i])
+        if (lis_max < lis_count[i])
         {
-            max[0] = lis_count[i];
-            max[1] = i;
+            lis_max = lis_count[i];
+            lis_max_index = i;
         }
-        ++i;
+        // ft_printf("%d,",lis_count[i]);
+        i++;
     }
-}
-
-void build_lis(size_t * max, int * lis_count, int * lis, int * cdl_array)
-{
-    int i;
-    size_t j;
-
-    i = max[1];
-    j = max[0] - 1;
+    // ft_printf("\n");
+    i = lis_max_index;
+    j = lis_max - 1;
     lis[j--] = cdl_array[i];
     while (i >= 0)
     {
-        if (lis_count[i] == max[0] - 1)
+        if (lis_count[i] == lis_max - 1)
         {
             lis[j] = cdl_array[i];
-            max[0] = lis_count[i];
+            lis_max = lis_count[i];
             --j;
         }
         --i;
     }
+    return (free(cdl_array),lis);
 }
 
-int * lis(t_circular_double_link_list * cdll_a)
-{
-    int * lis = malloc(sizeof(*lis) * cdll_a->total);
-    int * cdl_array = cdl2array(cdll_a);
-    int * lis_count;
-    size_t * max;
-
-    max = malloc(sizeof(*max)*2);
-    max[0] = 1;
-    max[1] = 0;
-    lis_count = malloc(sizeof(*lis_count) * cdll_a->total);
-    ft_memset(lis, 0, sizeof(*lis) * cdll_a->total);
-    count_lis(lis_count, cdl_array, cdll_a->total); 
-    get_lis_max(max,lis_count, cdll_a->total);
-    build_lis(max, lis_count, lis, cdl_array);
-     
-    return (free(cdl_array),free(lis_count),free(max),lis);
-}
-
-void rotate_cdll_rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank, char list_name, t_circular_double_link_list * ops)
-{
-    rotate(cdll, list_name, ops);
-    rotate(rank, 0, ops);
-}
-
-void push_cdll_rank(t_cdll_pair * cdll, t_cdll_pair * rank, char list_name, t_circular_double_link_list * ops)
-{
-    if (list_name == 'b')
-    {
-        push(cdll->b,cdll->a, list_name, ops);
-        push(rank->b,rank->a, 0, ops);
-    }
-    else
-    {
-        push(cdll->a,cdll->b, list_name, ops);
-        push(rank->a,rank->b, 0, ops);
-    }
-}
-
-int deal(t_cdll_pair * cdll, t_cdll_pair * rank, int * lis, t_circular_double_link_list * ops)
+int deal(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b, int * lis, t_circular_double_link_list * ops)
 {
     size_t i;
     size_t j;
@@ -137,53 +93,60 @@ int deal(t_cdll_pair * cdll, t_cdll_pair * rank, int * lis, t_circular_double_li
 
     i = 0;
     j = 0;
-    n = cdll->a->total;
-    array = cdl2array(cdll->a);
+    n = cdll_a->total;
+    array = cdl2array(cdll_a);
     
     while (i < n)
     {
         if (array[i] == lis[j])
         {
-            rotate_cdll_rank(cdll->a,rank->a, 'a', ops);
+            rotate(cdll_a, 'a', ops);
+            rotate(rank_a, 0, ops);
             ++j;
         }
         else
-            push_cdll_rank(cdll, rank, 'b', ops);
+        {
+            push(cdll_b, cdll_a, 'b', ops);
+            push(rank_b, rank_a, 0, ops);
+        }
         ++i;
     }
     return (free(array), SUCCESS); 
 }
 
-void rotate_n_cdll_rank_a(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, int n, t_circular_double_link_list * ops)
-{
-    rotate_n(cdll_a, 'a', n, ops);
-    rotate_n(rank_a, 0, n, ops);
-}
-
-void rotate_n_cdll_rank_b(t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b, int n, t_circular_double_link_list * ops)
-{
-    rotate_n(cdll_b, 'b', n, ops);
-    rotate_n(rank_b, 0, n, ops);
-}
-
-int sort(t_cdll_pair * cdll ,t_cdll_pair * rank, t_circular_double_link_list * ops)
+int sort(t_circular_double_link_list * cdll_a ,t_circular_double_link_list * rank_a,t_circular_double_link_list *cdll_b, t_circular_double_link_list * rank_b, t_circular_double_link_list * ops)
 {
     int * mov;
     int count;
 
-    while (cdll->b->total)
+    while (cdll_b->total)
     {
-        mov = compute_mov(cdll, rank);
+        mov = compute_mov(cdll_a, rank_a, cdll_b, rank_b);
         if (mov[0] >= 0)
-            rotate_n_cdll_rank_a(cdll->a, rank->a, mov[0] , ops);
+        {
+            rotate_n(cdll_a, 'a', mov[0], ops);
+            rotate_n(rank_a, 0, mov[0], ops);
+        }
         else
-            rotate_n_cdll_rank_a(cdll->a, rank->a, -1 * mov[0] , ops);
+        {
+            r_rotate_n(cdll_a, 'a', mov[0]*-1, ops);
+            r_rotate_n(rank_a, 0, mov[0]*-1, ops);
+        }
         if (mov[1] >= 0)
-            rotate_n_cdll_rank_a(cdll->b, rank->b, mov[1], ops);
+        {
+            rotate_n(cdll_b, 'b', mov[1], ops);
+            rotate_n(rank_b, 0, mov[1], ops);
+        }
         else
-            rotate_n_cdll_rank_a(cdll->b, rank->b, -1 * mov[1], ops);
-        push_cdll_rank(cdll, rank, 'a', ops);
+        {
+            r_rotate_n(cdll_b, 'b', mov[1]*-1, ops);
+            r_rotate_n(rank_b, 0, mov[1]*-1, ops);
+        }
+        push(cdll_a, cdll_b, 'a', ops);
+        push(rank_a, rank_b, 0, ops);
         free(mov);
+        // print_cdl(rank_a);
+        // print_cdl(rank_b);
     }
     return(SUCCESS);
 }
@@ -211,112 +174,82 @@ int abs(int a)
     return (a);
 }
 
-void get_distance(t_circular_double_link_list * cdll, int * mov)
+int * compute_mov(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b)
 {
     size_t i;
+    size_t j;
+    size_t sum_current;
+    size_t sum;
+    int * mov = malloc(sizeof(*mov) * 2);
+    int * array_b;
+    int * mov_b;
+    int * array_a;
+    int * mov_a;
+    int insert = max_size(cdll_a->total, cdll_b->total);
 
+    mov_b = cdl2array(cdll_b);
+    array_b = cdl2array(rank_b);
+    mov_a = cdl2array(cdll_a);
+    array_a = cdl2array(rank_a);
     i = 0;
-    while(i < cdll->total)
+    while(i < cdll_b->total)
     {
-        if (i <= cdll->total / 2)
-            mov[i] = i;
+        if (i <= cdll_b->total / 2)
+            mov_b[i] = i;
         else
-            mov[i] = i - (cdll->total);
+            mov_b[i] = i - (cdll_b->total);
         ++i;
     }
-}
-void compute_mov3(size_t i, int * insert, t_cdll_pair * cdll, t_array_pair * array)
-{
-    size_t j;
-
-    *insert = max_size(cdll->a->total, cdll->b->total);
-    j = 0;
-    while (j < cdll->a->total)
+    i = 0;
+    while(i < cdll_a->total)
     {
-        if (abs(array->a[j] - array->b[i]) <= *insert)
-            *insert = abs(array->a[j] - array->b[i]);
-        ++j;
+        if (i <= cdll_a->total / 2)
+            mov_a[i] = i;
+        else
+            mov_a[i] = i - (cdll_a->total);
+        ++i;
     }
-}
-
-void compute_mov2(size_t i, size_t j,t_array_pair * mov_, size_t * csum_sum)
-{
-    if (mov_->a[j] < 0 && mov_->b[i] < 0)
-        csum_sum[1] = max_size((size_t){mov_->a[j]*-1}, (size_t){mov_->b[i]*-1}); 
-    else if (mov_->a[j] >= 0 && mov_->b[i] < 0)
-        csum_sum[1] = mov_->a[j] + mov_->b[i]*-1;
-    else if (mov_->a[j] < 0 && mov_->b[i] >= 0)
-        csum_sum[1] = mov_->b[i] + mov_->a[j]*-1;
-    else
-        csum_sum[1] = max_size((size_t)mov_->a[j],(size_t)mov_->b[i]);
-}
-
-void compute_mov4(size_t * j, size_t * i, t_array_pair * array, t_cdll_pair * cdll)
-{
-    if (array->a[*j] - array->b[*i] < 0 && *j + 1 < cdll->a->total)
-        ++(*j);
-    else if (array->a[*j] - array->b[*i] < 0 && *j + 1 == cdll->a->total)
-        *j = 0;
-}
-
-void compute_mov5(t_array_pair * mov_, int * mov, size_t i, size_t j)
-{
-    mov[0] = mov_->a[j]; 
-    mov[1] = mov_->b[i]; 
-}
-
-int compute_mov6(size_t * i, t_cdll_pair * cdll, int * insert, size_t ** csum_sum)
-{
-    *i = 0; 
-    *insert = max_size(cdll->a->total, cdll->b->total);
-    *csum_sum = malloc(sizeof(*csum_sum)*2);
-    if (!*csum_sum)
-        return 0;
-    (*csum_sum)[0] = max_size(cdll->b->total, cdll->a->total);
-    return 1;
-}
-
-void compute_mov1(t_cdll_pair * cdll, t_array_pair * mov_,t_array_pair * array, int * mov)
-{
-    size_t j;
-    size_t i;
-    size_t * csum_sum;
-    int insert;
-
-    if (!compute_mov6(&i, cdll, &insert, &csum_sum))
-        return;
-    while (i < cdll->b->total)
+    i = 0; 
+    sum_current = max_size(cdll_b->total, cdll_a->total);
+    while (i < cdll_b->total)
     {
-        compute_mov3(i, &insert, cdll, array);
+        insert = max_size(cdll_a->total, cdll_b->total);
         j = 0;
-        while (j < cdll->a->total && abs(array->a[j] - array->b[i]) != insert)
-            ++j;
-        compute_mov4(&j, &i, mov_, cdll);
-        compute_mov2(i, j, mov_, csum_sum);
-        if (csum_sum[1] < csum_sum[0])
+        while (j < cdll_a->total)
         {
-            csum_sum[0] = csum_sum[1];
-            compute_mov5(mov_, mov, i, j);
+            if (abs(array_a[j] - array_b[i]) <= insert)
+                insert = abs(array_a[j] - array_b[i]);
+            ++j;
+        }
+        j = 0;
+        while (j < cdll_a->total && abs(array_a[j] - array_b[i]) != insert)
+        {
+            ++j;
+        }
+        // if (j == cdll_a->total)
+        //     j = 0;
+        if (array_a[j] - array_b[i] < 0 && j + 1 < cdll_a->total)
+            ++j;
+        else if (array_a[j] - array_b[i] < 0 && j + 1 == cdll_a->total)
+            j = 0;
+        if (mov_a[j] < 0 && mov_b[i] < 0)
+            sum = max_size((size_t){mov_a[j]*-1}, (size_t){mov_b[i]*-1}); 
+        else if (mov_a[j] >= 0 && mov_b[i] < 0)
+            sum = mov_a[j] + mov_b[i]*-1;
+        else if (mov_a[j] < 0 && mov_b[i] >= 0)
+            sum = mov_b[i] + mov_a[j]*-1;
+        else
+            sum = max_size((size_t)mov_a[j],(size_t)mov_b[i]);
+        if (sum < sum_current)
+        {
+            sum_current = sum;
+            mov[0] = mov_a[j]; 
+            mov[1] = mov_b[i]; 
         }
         ++i; 
     }
-    free(csum_sum);
-}
 
-int * compute_mov(t_cdll_pair * cdll, t_cdll_pair * rank)
-{
-    int * mov = malloc(sizeof(*mov) * 2);
-    t_array_pair array;
-    t_array_pair mov_;
-
-    mov_.b = cdl2array(cdll->b);
-    array.b = cdl2array(rank->b);
-    mov_.a = cdl2array(cdll->a);
-    array.a = cdl2array(rank->a);
-    get_distance(cdll->b, mov_.b);
-    get_distance(cdll->a, mov_.a);  
-    compute_mov1(cdll, &mov_, &array, mov); 
-    return (free(array.a), free(array.b), free(mov_.a), free(mov_.b), mov);
+    return (free(array_a), free(array_b), free(mov_a), free(mov_b), mov);
 }
 
 size_t max_size(size_t a, size_t b)
