@@ -1,6 +1,7 @@
 # replace C_FILES with hard coded path i.e. make a bash script
 C_FILES = $(wildcard ./*.c)
-C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS = -Wall -Wextra
+#-Werror
 NAME = push_swap
 
 .PHONY: all clean fclean re
