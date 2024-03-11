@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:16:50 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 17:16:52 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/11 18:44:13 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void sort(t_vars * vars)
 
     while (vars->cdl_list_b->total)
     {
-        mov = compute_mov(vars->cdl_list_a, vars->rank_a, vars->cdl_list_b, vars->rank_b);
+        mov = compute_mov(vars);
         if (mov[0] >= 0)
             rotate_n_both(vars, mov);
         else

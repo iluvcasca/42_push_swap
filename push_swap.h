@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 17:15:22 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/11 18:42:34 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ typedef struct s_lis_vars {
     size_t lis_max;
     size_t lis_max_index;
 } t_lis_vars;
+
+typedef struct s_mov_vars {
+    size_t i;
+    size_t j;
+    size_t sum_current;
+    size_t sum;
+    int * array_b;
+    int * mov_b;
+    int * array_a;
+    int * mov_a;
+    int insert;
+} t_mov_vars;
 
 typedef struct s_i {
     size_t left;
@@ -92,7 +104,7 @@ int * lis(t_circular_double_link_list * cdll_a);
 int deal(t_vars * vars);
 size_t max_size(size_t a, size_t b);
 void sort(t_vars * vars);
-int * compute_mov(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * rank_b);
+int * compute_mov(t_vars * vars);
 void reorder(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * ops);
 int abs(int a);
 
