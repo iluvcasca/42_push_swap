@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 18:42:34 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/11 19:20:14 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ typedef struct s_vars {
     t_circular_double_link_list * ops;
     int * array;
 } t_vars;
+
+typedef struct s_parse_string {
+    int value;
+    char * temp;
+} t_parse_string;
 
 typedef struct s_lis_vars {
     int * lis ;

@@ -1,6 +1,6 @@
 # replace C_FILES with hard coded path i.e. make a bash script
 C_FILES = $(wildcard ./*.c)
-C_FLAGS = -Wall -Wextra
+C_FLAGS = -g -Wall -Wextra
 #-Werror
 NAME = push_swap
 

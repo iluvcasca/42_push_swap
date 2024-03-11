@@ -6,9 +6,10 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/13 10:04:55 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/11 19:20:53 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft/mylibc/mylibc_local.h"
 #include "push_swap.h"
 
 int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
@@ -33,8 +34,8 @@ int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
 
 int parse_string(char * string, t_circular_double_link_list * cdl_list, int * status)
 {
+    t_parse_string vars;
     char ** inputs;
-    int value;
     size_t i;
     t_double_link_node * cdl_node;
 
@@ -44,9 +45,11 @@ int parse_string(char * string, t_circular_double_link_list * cdl_list, int * st
         return (free(inputs), ERROR);
     while(inputs[i])
     {
-        value = ft_atoi_safe(inputs[i], status);
-        if (!(*status == SUCCESS && add_int2node(cdl_list, cdl_node, value)))
-            return (free_split(inputs), cdl_free_list(cdl_list), ERROR);
+        vars.temp = ft_strtrim(inputs[i], "+");
+        vars.value = ft_atoi_safe(vars.temp, status);
+        if (!(*status == SUCCESS && add_int2node(cdl_list, cdl_node, vars.value)))
+            return (free(vars.temp),free_split(inputs), cdl_free_list(cdl_list), ERROR);
+        free(vars.temp);
         i++;
     }
     if (check_duplicate(cdl_list) == ERROR)
@@ -59,13 +62,16 @@ int parse_arguments(int argc, char ** argv, t_circular_double_link_list * cdl_li
     int value;
     size_t i;
     t_double_link_node * cdl_node;
+    char * temp;
 
     i = 1;
     while(i < argc)
     {
-        value = ft_atoi_safe(argv[i], status);
-        if (!(*status == SUCCESS && add_int2node(cdl_list, cdl_node, value)))
-            return (cdl_free_list(cdl_list), ERROR);
+        temp = ft_strtrim(argv[i]," +");
+        value = ft_atoi_safe(temp, status);
+        if (!(*status == SUCCESS && add_int2node(cdl_list, cdl_node, value) && argv[i][0]))
+            return (free(temp),cdl_free_list(cdl_list), ERROR);
+        free(temp);
         i++;
     }
     if (check_duplicate(cdl_list) == ERROR)
