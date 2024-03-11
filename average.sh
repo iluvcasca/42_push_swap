@@ -8,7 +8,7 @@ results=()
 # Assume 'command' is the command whose results you want to average
 for ((i=1; i<=$nb; i++)); do
   # Replace 'command' with the actual command you want to execute
-  result=$(ARG=$(bash number.sh $list); ./a.out "$ARG" | wc -l)
+  result=$(ARG=$(bash number.sh $list); ./push_swap "$ARG" | wc -l)
   results+=($result)
 done
 # Calculate the sum of the results
