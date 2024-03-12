@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:52:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 17:12:02 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:52:53 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void print_cdl_str(t_circular_double_link_list * cdl_list)
 {
     t_double_link_node * cdl_node;
 
+    if (cdl_list->total == 1)
+    {
+        ft_printf("%s\n", ((char *)cdl_list->first_node->data));
+        return;
+    }
     if (cdl_list && cdl_list->first_node)
     {
         cdl_node = cdl_list->first_node;

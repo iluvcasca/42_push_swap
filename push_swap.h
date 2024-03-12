@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:50:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 19:20:14 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/12 20:07:33 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_run {
 void print_array(int * array, size_t size);
 void print_cdl(t_circular_double_link_list * cdl_list);
 void print_cdl_str(t_circular_double_link_list * cdl_list);
+int check_sorted(t_vars * vars);
+void free_all(t_vars * vars);
+
 // parsing
 int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list);
 int parse_string(char * string, t_circular_double_link_list * cdl_list, int * status);
@@ -129,4 +132,7 @@ void process_ops_rr(t_circular_double_link_list * cdl_list, t_double_link_node *
 void iter_ops_rrb(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
 void iter_ops_rra(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node);
 void insert_while_rrr(t_circular_double_link_list * cdl_list, t_double_link_node * cdl_node, size_t * count_rr);
+
+int fast_sort(t_vars * vars);
+int sort_small(t_vars * vars);
 #endif
