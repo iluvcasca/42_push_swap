@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:58:49 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/12 22:22:59 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:24:58 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,25 @@ size_t ops_len(char * line)
     return i;
 }
 
+int process1(char * line, t_vars * vars, size_t n)
+{
+    if (!ft_strncmp(line, "rrb\n", n))
+        return(r_rotate(vars->cdl_list_b, 0, vars->ops),SUCCESS);
+    else if (!ft_strncmp(line, "rr\n", n))
+    {
+        rotate(vars->cdl_list_a, 0, vars->ops);
+        rotate(vars->cdl_list_b, 0, vars->ops);
+        return(SUCCESS);
+    }
+    else if (!ft_strncmp(line, "rrr\n", n))
+    {
+        r_rotate(vars->cdl_list_a, 0, vars->ops);
+        r_rotate(vars->cdl_list_b, 0, vars->ops);
+        return(SUCCESS);
+    }
+    return (ERROR);
+}
+
 int process(char * line, t_vars * vars)
 {
     size_t n;
@@ -79,19 +98,7 @@ int process(char * line, t_vars * vars)
         rotate(vars->cdl_list_b, 0, vars->ops);
     else if (!ft_strncmp(line, "rra\n", n))
         r_rotate(vars->cdl_list_a, 0, vars->ops);
-    else if (!ft_strncmp(line, "rrb\n", n))
-        r_rotate(vars->cdl_list_b, 0, vars->ops);
-    else if (!ft_strncmp(line, "rr\n", n))
-    {
-        rotate(vars->cdl_list_a, 0, vars->ops);
-        rotate(vars->cdl_list_b, 0, vars->ops);
-    }
-    else if (!ft_strncmp(line, "rrr\n", n))
-    {
-        r_rotate(vars->cdl_list_a, 0, vars->ops);
-        r_rotate(vars->cdl_list_b, 0, vars->ops);
-    }
-    else 
+    else if (!process1(line, vars, n)) 
         return (ERROR);
     return (SUCCESS);
 }
