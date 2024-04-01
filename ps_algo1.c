@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:10:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 13:10:56 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:08:26 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int rank(t_circular_db_ll * cdll, t_circular_db_ll * rank)
     array = bottom_up_merge_sort(array, cdll->total);
     i = 0;
     node = cdll->first_node;
+    rank_node = 0;
     do {
         while (*((int *)node->data) != array[i])
             ++i;

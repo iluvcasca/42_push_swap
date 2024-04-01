@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:40:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 18:57:28 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:12:58 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -75,7 +75,7 @@ static void compute_mov2(t_vars * vars, t_mov_vars * mov_vars)
         mov_vars->j = 0;
 }
 
-static void compute_mov3(t_vars * vars, t_mov_vars * mov_vars, int * mov)
+static void compute_mov3(t_mov_vars * mov_vars, int * mov)
 {
     if (mov_vars->mov_a[mov_vars->j] < 0 
         && mov_vars->mov_b[mov_vars->i] < 0)
@@ -114,7 +114,7 @@ int * compute_mov(t_vars * vars)
     while (mov_vars->i < vars->cdl_list_b->total)
     {
         compute_mov2(vars, mov_vars);
-        compute_mov3(vars, mov_vars, mov);
+        compute_mov3(mov_vars, mov);
         ++(mov_vars->i); 
     }
     return (free(mov_vars->array_a), free(mov_vars->array_b), 

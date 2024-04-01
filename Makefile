@@ -11,8 +11,7 @@ push_swap_opti_rr1.c ps_algo.c ps_operations2.c \
 ps_parsing.c push_swap_opti_r1.c push_swap_opti_rr.c \
 sort_small.c sort_small1.c push_swap_utlis1.c
 
-C_FLAGS = -g -Wall -Wextra
-#-Werror
+C_FLAGS = -Wall -Wextra -Werror
 NAME = push_swap
 
 .PHONY: all clean fclean re

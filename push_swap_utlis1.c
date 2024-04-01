@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 20:02:46 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/12 20:03:03 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:11:49 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int check_sorted(t_vars * vars)
     rank = cdl2array(vars->rank_a);
     while (i < vars->rank_a->total)
     {
-        if (i != rank[i])
+        if (i != (size_t)rank[i])
             break;
         ++i;
     }

@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:05:03 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 13:11:15 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:10:11 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -24,9 +24,9 @@ static void init_lis(t_lis_vars * vars, t_circular_db_ll * cdll_a)
 static void lis2(t_lis_vars * vars, t_circular_db_ll * cdll_a, int * lis)
 {
     vars->i = 0;
-    while (vars->i < cdll_a->total)
+    while ((size_t)vars->i < cdll_a->total)
     {
-        if (vars->lis_max < vars->lis_count[vars->i])
+        if (vars->lis_max < (size_t)vars->lis_count[vars->i])
         {
             vars->lis_max = vars->lis_count[vars->i];
             vars->lis_max_index = vars->i;
@@ -38,7 +38,7 @@ static void lis2(t_lis_vars * vars, t_circular_db_ll * cdll_a, int * lis)
     lis[(vars->j)--] = vars->cdl_array[vars->i];
     while (vars->i >= 0)
     {
-        if (vars->lis_count[vars->i] == vars->lis_max - 1)
+        if ((size_t)vars->lis_count[vars->i] == vars->lis_max - 1)
         {
             lis[vars->j] = vars->cdl_array[vars->i];
             vars->lis_max = vars->lis_count[vars->i];
@@ -57,11 +57,11 @@ int * lis(t_circular_db_ll * cdll_a)
     vars = malloc(sizeof(*vars));
     init_lis(vars, cdll_a);
     ft_memset(lis, 0, sizeof(*lis) * cdll_a->total);
-    while (vars->i < cdll_a->total)
+    while ((size_t)vars->i < cdll_a->total)
     {
         vars->lis_count[vars->i] = 1;
         vars->j = 0;
-        while (vars->j < vars->i)
+        while (vars->j < (size_t)vars->i)
         {
             if (vars->cdl_array[vars->i] > vars->cdl_array[vars->j] 
                 && vars->lis_count[vars->i] < vars->lis_count[vars->j] + 1) 

@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 13:11:43 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:12:23 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/mylibc/mylibc_local.h"
@@ -41,6 +41,7 @@ int parse_string(char * string, t_circular_db_ll * cdl_list, int * status)
 
     i = 0;
     inputs = ft_split(string, ' ');
+    cdl_node = 0;
     if (!inputs || inputs[i] == NULL)
         return (free(inputs), ERROR);
     while(inputs[i])
@@ -65,7 +66,8 @@ int parse_arguments(int argc, char ** argv, t_circular_db_ll * cdl_list, int * s
     char * temp;
 
     i = 1;
-    while(i < argc)
+    cdl_node = 0;
+    while(i < (size_t)argc)
     {
         temp = ft_strtrim(argv[i]," +");
         value = ft_atoi_safe(temp, status);

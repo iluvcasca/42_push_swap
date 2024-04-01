@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:16:50 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 13:11:07 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:10:33 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void r_rotate_n_both(t_vars * vars, int * mov)
 void sort(t_vars * vars)
 {
     int * mov;
-    int count;
 
     while (vars->cdl_list_b->total)
     {
