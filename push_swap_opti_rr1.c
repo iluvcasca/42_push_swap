@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 12:57:28 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 13:12:35 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:52:35 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 void count_ops_rr(t_circular_db_ll * cdl_list, t_double_link_node ** node, size_t * count, char ops)
 {
-    do
+    size_t i;
+
+    i = 0;
+    while ((((char *)(*node)->data)[0] == 'r' && ((char *)(*node)->data)[1] == 'r' && ((char *)(*node)->data)[2] == ops && (*node) != cdl_list->first_node) || i == 0)
     {
         if (((char *)(*node)->data)[0] == 'r' && ((char *)(*node)->data)[1] == 'r' && ((char *)(*node)->data)[2] == ops)
             ++(*count);
         else
             break;
         (*node) = (*node)->next;
+        i = 1;
     }
-    while (((char *)(*node)->data)[0] == 'r' && ((char *)(*node)->data)[1] == 'r' && ((char *)(*node)->data)[2] == ops && (*node) != cdl_list->first_node);
 }
 
 void insert_while_rrr(t_circular_db_ll * cdl_list, t_double_link_node * cdl_node, size_t * count_rr)

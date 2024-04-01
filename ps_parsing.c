@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 14:12:23 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:41:05 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/mylibc/mylibc_local.h"
@@ -101,18 +101,22 @@ int * cdl2array(t_circular_db_ll * cdl_list)
 {
     t_double_link_node * cdl_node;
     size_t i;
+    size_t j;
     int * array;
 
     i = 0;
+    j = 0;
     array = malloc(sizeof(*array) * cdl_list->total);
     cdl_node = cdl_list->first_node;
     if (array && cdl_list->first_node)
     {
-        do {
+        while (cdl_node != cdl_list->first_node || j == 0)
+        {
             array[i] = *((int *)cdl_node->data);
             cdl_node = cdl_node->next;
             ++i;
-        } while (cdl_node != cdl_list->first_node);
+            j = 1;
+        }
     }
     return (array);
 }

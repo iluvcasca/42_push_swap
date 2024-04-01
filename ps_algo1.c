@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:10:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 14:08:26 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:49:54 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,24 @@ int rank(t_circular_db_ll * cdll, t_circular_db_ll * rank)
     int * array;
     t_double_link_node * node;
     t_double_link_node * rank_node;
-    size_t i;
+    size_t i[2];
 
     array = cdl2array(cdll);
     array = bottom_up_merge_sort(array, cdll->total);
-    i = 0;
+    i[0] = 0;
+    i[1] = 0;
     node = cdll->first_node;
     rank_node = 0;
-    do {
-        while (*((int *)node->data) != array[i])
-            ++i;
-        if (!add_int2node(rank, rank_node, i))
+    while (node != cdll->first_node || i[1] == 0)
+    {
+        while (*((int *)node->data) != array[i[0]])
+            ++i[0];
+        if (!add_int2node(rank, rank_node, i[0]))
             return(cdl_free_list(cdll),cdl_free_list(rank),free(array),ERROR);
         node = node->next;
-        i = 0;
-    } while (node != cdll->first_node);
+        i[0] = 0;
+        i[1] = 1;
+    }
     return (free(array),SUCCESS);
 }
 
