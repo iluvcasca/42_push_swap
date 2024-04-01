@@ -4,7 +4,7 @@ push_swap.c push_swap_opti_rr1.c ps_algo.c ps_operations2.c \
 ps_parsing.c push_swap_opti_r1.c push_swap_opti_rr.c \
 sort_small.c sort_small1.c push_swap_utlis1.c
 
-C_FILES_BONUS = checker.c ps_algo1.c ps_lis.c ps_operations.c \
+C_FILES_BONUS = checker.c checker1.c ps_algo1.c ps_lis.c ps_operations.c \
 ps_sort.c push_swap_opti_r.c \
 push_swap_utlis.c ps_algo2.c ps_operations1.c ps_parsing1.c \
 push_swap_opti_rr1.c ps_algo.c ps_operations2.c \
