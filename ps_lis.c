@@ -6,12 +6,12 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:05:03 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 17:09:35 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:15 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-static void init_lis(t_lis_vars * vars, t_circular_double_link_list * cdll_a)
+static void init_lis(t_lis_vars * vars, t_circular_db_ll * cdll_a)
 {
     vars->cdl_array = cdl2array(cdll_a);
     vars->lis_count = malloc(sizeof(int) * cdll_a->total);
@@ -21,7 +21,7 @@ static void init_lis(t_lis_vars * vars, t_circular_double_link_list * cdll_a)
     vars->lis_max_index=0;
 }
 
-static void lis2(t_lis_vars * vars, t_circular_double_link_list * cdll_a, int * lis)
+static void lis2(t_lis_vars * vars, t_circular_db_ll * cdll_a, int * lis)
 {
     vars->i = 0;
     while (vars->i < cdll_a->total)
@@ -48,7 +48,7 @@ static void lis2(t_lis_vars * vars, t_circular_double_link_list * cdll_a, int * 
     }
 }
 
-int * lis(t_circular_double_link_list * cdll_a)
+int * lis(t_circular_db_ll * cdll_a)
 {
     t_lis_vars * vars;
     int * lis;

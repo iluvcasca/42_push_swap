@@ -6,13 +6,13 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:14:50 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/13 10:35:45 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:25 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int r_rotate(t_circular_double_link_list * cdl_list, char list_name, t_circular_double_link_list * ops)
+int r_rotate(t_circular_db_ll * cdl_list, char list_name, t_circular_db_ll * ops)
 {
     t_double_link_node * node;
     if (!(cdl_list && cdl_list->first_node))
@@ -34,7 +34,7 @@ int r_rotate(t_circular_double_link_list * cdl_list, char list_name, t_circular_
     return (SUCCESS);
 }
 
-int r_rr(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * ops)
+int r_rr(t_circular_db_ll * cdll_a, t_circular_db_ll * cdll_b, t_circular_db_ll * ops)
 {
     t_double_link_node * node;
 
@@ -54,7 +54,7 @@ int r_rr(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdl
     return(SUCCESS);
 }
 
-void r_rotate_n(t_circular_double_link_list * cdl_list, char list_name, size_t n, t_circular_double_link_list * ops)
+void r_rotate_n(t_circular_db_ll * cdl_list, char list_name, size_t n, t_circular_db_ll * ops)
 {
     size_t i;
 
@@ -66,7 +66,7 @@ void r_rotate_n(t_circular_double_link_list * cdl_list, char list_name, size_t n
     }
 }
 
-void rotate_n(t_circular_double_link_list * cdl_list, char list_name, size_t n, t_circular_double_link_list * ops)
+void rotate_n(t_circular_db_ll * cdl_list, char list_name, size_t n, t_circular_db_ll * ops)
 {
     size_t i;
 
@@ -78,7 +78,7 @@ void rotate_n(t_circular_double_link_list * cdl_list, char list_name, size_t n, 
     }
 }
 
-void push_n(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, char list_name, size_t n, t_circular_double_link_list * ops)
+void push_n(t_circular_db_ll * cdll_a, t_circular_db_ll * cdll_b, char list_name, size_t n, t_circular_db_ll * ops)
 {
     size_t i;
 

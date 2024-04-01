@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:52:43 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/12 16:52:53 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:13:23 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void print_array(int * array, size_t size)
     }
 }
 
-void print_cdl(t_circular_double_link_list * cdl_list)
+void print_cdl(t_circular_db_ll * cdl_list)
 {
     t_double_link_node * cdl_node;
 
@@ -57,7 +57,7 @@ void print_cdl(t_circular_double_link_list * cdl_list)
         ft_printf("total: %u\n", cdl_list->total);
 }
 
-void print_cdl_str(t_circular_double_link_list * cdl_list)
+void print_cdl_str(t_circular_db_ll * cdl_list)
 {
     t_double_link_node * cdl_node;
 

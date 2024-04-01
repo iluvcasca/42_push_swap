@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:16:50 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 18:44:13 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:07 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void sort(t_vars * vars)
     }
 }
 
-void reorder(t_circular_double_link_list * cdll_a, t_circular_double_link_list * rank_a, t_circular_double_link_list * ops)
+void reorder(t_circular_db_ll * cdll_a, t_circular_db_ll * rank_a, t_circular_db_ll * ops)
 {
     size_t i;
     int * array_a;

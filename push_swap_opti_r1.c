@@ -6,11 +6,11 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 12:56:28 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/14 12:56:39 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:12:07 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
-void count_ops_r(t_circular_double_link_list * cdl_list, t_double_link_node ** node, size_t * count, char ops)
+void count_ops_r(t_circular_db_ll * cdl_list, t_double_link_node ** node, size_t * count, char ops)
 {
     do
     {
@@ -23,7 +23,7 @@ void count_ops_r(t_circular_double_link_list * cdl_list, t_double_link_node ** n
     while (((char *)(*node)->data)[0] == 'r' && ((char *)(*node)->data)[1] == ops && (*node) != cdl_list->first_node);
 }
 
-void insert_rr(t_circular_double_link_list * cdl_list, t_double_link_node * node)
+void insert_rr(t_circular_db_ll * cdl_list, t_double_link_node * node)
 {
     t_double_link_node * rr;
 
@@ -42,7 +42,7 @@ void insert_rr(t_circular_double_link_list * cdl_list, t_double_link_node * node
     }
 }
 
-void iter_ops_ra(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node)
+void iter_ops_ra(t_circular_db_ll * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node)
 {
     cdl_node_r[0] = *cdl_node;
     count_ops_r(cdl_list, &cdl_node_r[0], &count_r[0], 'a');
@@ -51,7 +51,7 @@ void iter_ops_ra(t_circular_double_link_list * cdl_list, t_double_link_node ** c
     *cdl_node = cdl_node_r[1];
 }
 
-void iter_ops_rb(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node)
+void iter_ops_rb(t_circular_db_ll * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node)
 {
     cdl_node_r[1] = *cdl_node;
     count_ops_r(cdl_list, &cdl_node_r[1], &count_r[0], 'b');
@@ -60,7 +60,7 @@ void iter_ops_rb(t_circular_double_link_list * cdl_list, t_double_link_node ** c
     *cdl_node = cdl_node_r[0];
 }
 
-void del_r(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, size_t * count_rr)
+void del_r(t_circular_db_ll * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, size_t * count_rr)
 {
     while (count_r[0] && count_r[1])
     {

@@ -6,12 +6,12 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:01:40 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/14 13:08:28 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:20 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int swap(t_circular_double_link_list * cdl_list, char list_name, t_circular_double_link_list * ops)
+int swap(t_circular_db_ll * cdl_list, char list_name, t_circular_db_ll * ops)
 {
     t_double_link_node * temp;
     t_double_link_node * node;
@@ -38,7 +38,7 @@ int swap(t_circular_double_link_list * cdl_list, char list_name, t_circular_doub
     return (SUCCESS);
 }
 
-int ss(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * ops)
+int ss(t_circular_db_ll * cdll_a, t_circular_db_ll * cdll_b, t_circular_db_ll * ops)
 {
     t_double_link_node * node;
     swap(cdll_a, 0, ops);
@@ -64,7 +64,7 @@ void write_push(t_double_link_node * node, char list_name)
     ((char *)node->data)[2] = '\0';
 }
 
-void push_switch_node(t_circular_double_link_list * cdll_b, t_double_link_node * temp)
+void push_switch_node(t_circular_db_ll * cdll_b, t_double_link_node * temp)
 {
     if (cdll_b->total >= 2)
     {
@@ -79,7 +79,7 @@ void push_switch_node(t_circular_double_link_list * cdll_b, t_double_link_node *
     }
 }
 
-int push(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, char list_name, t_circular_double_link_list * ops)
+int push(t_circular_db_ll * cdll_a, t_circular_db_ll * cdll_b, char list_name, t_circular_db_ll * ops)
 {
     t_double_link_node * temp;
     t_double_link_node * node;

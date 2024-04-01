@@ -6,13 +6,13 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:10:32 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 17:11:00 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:10:56 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int rank(t_circular_double_link_list * cdll, t_circular_double_link_list * rank)
+int rank(t_circular_db_ll * cdll, t_circular_db_ll * rank)
 {
     int * array;
     t_double_link_node * node;

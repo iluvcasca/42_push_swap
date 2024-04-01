@@ -6,12 +6,12 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:56:11 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 18:59:37 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:12:02 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void insert_while_rr(t_circular_double_link_list * cdl_list, t_double_link_node * cdl_node, size_t * count_rr)
+void insert_while_rr(t_circular_db_ll * cdl_list, t_double_link_node * cdl_node, size_t * count_rr)
 {
     while (*count_rr)
     {
@@ -20,7 +20,7 @@ void insert_while_rr(t_circular_double_link_list * cdl_list, t_double_link_node 
     }
 }
 
-void process_ops_r(t_circular_double_link_list * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node)
+void process_ops_r(t_circular_db_ll * cdl_list, t_double_link_node ** cdl_node_r, size_t * count_r, t_double_link_node ** cdl_node)
 {
     count_r[1] = 0;
     count_r[0] = 0;
@@ -32,7 +32,7 @@ void process_ops_r(t_circular_double_link_list * cdl_list, t_double_link_node **
         *cdl_node = (*cdl_node)->next;
 }
 
-int optimize_ops_r(t_circular_double_link_list * cdl_list)
+int optimize_ops_r(t_circular_db_ll * cdl_list)
 {
     t_double_link_node ** cdl_node_r;
     t_double_link_node * cdl_node;

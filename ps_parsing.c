@@ -6,13 +6,13 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:51:24 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/11 19:20:53 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:43 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/mylibc/mylibc_local.h"
 #include "push_swap.h"
 
-int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
+int parse_input(int argc, char ** argv, t_circular_db_ll * cdl_list)
 {
     int status;
 
@@ -32,7 +32,7 @@ int parse_input(int argc, char ** argv, t_circular_double_link_list * cdl_list)
     return (SUCCESS);
 }
 
-int parse_string(char * string, t_circular_double_link_list * cdl_list, int * status)
+int parse_string(char * string, t_circular_db_ll * cdl_list, int * status)
 {
     t_parse_string vars;
     char ** inputs;
@@ -57,7 +57,7 @@ int parse_string(char * string, t_circular_double_link_list * cdl_list, int * st
     return (free_split(inputs), SUCCESS);
 }
 
-int parse_arguments(int argc, char ** argv, t_circular_double_link_list * cdl_list, int * status)
+int parse_arguments(int argc, char ** argv, t_circular_db_ll * cdl_list, int * status)
 {
     int value;
     size_t i;
@@ -79,7 +79,7 @@ int parse_arguments(int argc, char ** argv, t_circular_double_link_list * cdl_li
     return (SUCCESS);
 }
 
-int add_int2node(t_circular_double_link_list * cdl_list, t_double_link_node * cdl_node, int value)
+int add_int2node(t_circular_db_ll * cdl_list, t_double_link_node * cdl_node, int value)
 {
     cdl_node = malloc(sizeof(*cdl_node)); 
 
@@ -95,7 +95,7 @@ int add_int2node(t_circular_double_link_list * cdl_list, t_double_link_node * cd
     return (SUCCESS);
 }
 
-int * cdl2array(t_circular_double_link_list * cdl_list)
+int * cdl2array(t_circular_db_ll * cdl_list)
 {
     t_double_link_node * cdl_node;
     size_t i;

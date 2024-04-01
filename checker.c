@@ -6,12 +6,11 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:58:49 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/13 12:24:58 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:12:58 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "stdlib.h"
 
 static void init(t_vars *vars)
 {

@@ -6,13 +6,13 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:08:12 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/14 13:08:24 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:31 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int rotate(t_circular_double_link_list * cdl_list, char list_name, t_circular_double_link_list * ops)
+int rotate(t_circular_db_ll * cdl_list, char list_name, t_circular_db_ll * ops)
 {
     t_double_link_node * node;
 
@@ -34,7 +34,7 @@ int rotate(t_circular_double_link_list * cdl_list, char list_name, t_circular_do
     return (SUCCESS);
 }
 
-int rr(t_circular_double_link_list * cdll_a, t_circular_double_link_list * cdll_b, t_circular_double_link_list * ops)
+int rr(t_circular_db_ll * cdll_a, t_circular_db_ll * cdll_b, t_circular_db_ll * ops)
 {
     t_double_link_node * node;
     rotate(cdll_a, 0, ops);

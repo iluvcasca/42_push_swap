@@ -6,12 +6,12 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 17:16:33 by kgriset           #+#    #+#             */
-/*   Updated: 2024/02/05 19:08:08 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:11:50 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int check_duplicate(t_circular_double_link_list * cdl_list)
+int check_duplicate(t_circular_db_ll * cdl_list)
 {
     int * array;
     size_t i;

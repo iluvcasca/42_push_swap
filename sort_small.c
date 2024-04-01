@@ -6,13 +6,13 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 20:01:49 by kgriset           #+#    #+#             */
-/*   Updated: 2024/03/12 20:17:27 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/01 13:12:45 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void init_fast_sort(t_vars * vars, t_circular_double_link_list ** rank_cpy, int ** array)
+static void init_fast_sort(t_vars * vars, t_circular_db_ll ** rank_cpy, int ** array)
 {
     *rank_cpy = malloc(sizeof(**rank_cpy));
     cdl_init_list(*rank_cpy);
@@ -41,7 +41,7 @@ static void r_rotate_both(t_vars * vars)
 int fast_sort(t_vars * vars)
 {
     int * array;
-    t_circular_double_link_list * rank_cpy;
+    t_circular_db_ll * rank_cpy;
 
     init_fast_sort(vars,&rank_cpy,&array);
     if (array[0] == 1 && array[1] == 0 && array[2] == 2)
