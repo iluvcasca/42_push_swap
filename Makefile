@@ -13,6 +13,7 @@ sort_small.c sort_small1.c push_swap_utlis1.c
 
 C_FLAGS = -Wall -Wextra -Werror
 NAME = push_swap
+CHECKER = checker
 
 .PHONY: all clean fclean re
 .DEFAULT: all
@@ -22,7 +23,9 @@ all: $(NAME)
 $(NAME): $(C_FILES) | build
 	cc $(C_FLAGS) $^ -o $(NAME) -L ./libft -lft
 
-bonus: $(C_FILES_BONUS) | build
+bonus: $(CHECKER) 
+
+$(CHECKER) : $(C_FILES_BONUS) | build
 	cc $(C_FLAGS) $^ -o checker -L ./libft -lft
 
 build:
@@ -33,7 +36,7 @@ clean:
 
 fclean: clean
 	-rm -f $(NAME)
-	-rm -f checker
+	-rm -f $(CHECKER)
 	$(MAKE) -C libft fclean
 
 
