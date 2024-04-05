@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:14:50 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 15:34:40 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/05 09:19:59 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,17 @@ void	rotate_n(t_circular_db_ll *cdl_list, char list_name, size_t n,
 	}
 }
 
-void	push_n(t_circular_db_ll *cdll_a, t_circular_db_ll *cdll_b,
-		char list_name, size_t n, t_circular_db_ll *ops)
+void	push_n(t_vars *vars, char list_name, size_t n)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < n)
 	{
-		push(cdll_a, cdll_b, list_name, ops);
+		if (list_name)
+			push(vars->cdl_list_b, vars->cdl_list_a, list_name, vars->ops);
+		else
+			push(vars->rank_b, vars->rank_a, list_name, vars->ops);
 		++i;
 	}
 }

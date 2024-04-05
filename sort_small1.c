@@ -6,7 +6,7 @@
 /*   By: kgriset <kgriset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 20:09:08 by kgriset           #+#    #+#             */
-/*   Updated: 2024/04/01 15:17:35 by kgriset          ###   ########.fr       */
+/*   Updated: 2024/04/05 09:20:10 by kgriset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	sort_small(t_vars *vars)
 			print_cdl_str(vars->ops), free_all(vars), SUCCESS);
 	else
 	{
-		push_n(vars->cdl_list_b, vars->cdl_list_a, 'b', 2, vars->ops);
-		push_n(vars->rank_b, vars->rank_a, 0, 2, vars->ops);
+		push_n(vars, 'b', 2);
+		push_n(vars, 0, 2);
 		fast_sort(vars);
 		sort(vars);
 		cdl_free_list(vars->rank_a);
